@@ -120,8 +120,15 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+POSSIBLE_PROVIDERS = (
+    'github',
+)
+
 GOOGLE_OAUTH2_CLIENT_ID = '782206201166.apps.googleusercontent.com'
 GOOGLE_OAUTH2_CLIENT_SECRET = 'd74bbVVjSBd59jhO9W2BM4Ix'
+
+GITHUB_APP_ID = '98319ae893e0f9a81427'
+GITHUB_API_SECRET = '0a20d347ad146f71b221ece116f47c1d2cefb192'
 
 LOGIN_URL = '/login-form/'
 LOGIN_REDIRECT_URL = ''

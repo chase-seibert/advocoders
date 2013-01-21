@@ -12,10 +12,6 @@ def home(request):
     return render(request, 'home.html', locals())
 
 
-def signup(request):
-    return render(request, 'signup.html', locals())
-
-
 @login_required
 def profile(request):
     profile, _ = Profile.objects.get_or_create(user=request.user)

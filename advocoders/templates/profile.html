@@ -6,4 +6,17 @@
         {{ form.as_p }}
         <input type="submit">
     </form>
+    {% if request.user.profile%}
+        <ul>
+            {% for provider, account in request.user.profile.possible_accounts.items %}
+                <li>
+                    {% if account %}
+                        {{ provider }} - <a href="{% url socialauth_disconnect provider %}">disconnect</a>
+                    {% else %}
+                        {{ provider }} - <a href="{% url socialauth_begin provider %}">connect</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}
