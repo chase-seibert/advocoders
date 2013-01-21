@@ -4,15 +4,18 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 from advocoders.models import Profile
 from advocoders.forms import ProfileForm
+from advocoders.models import Company
 from advocoders.models import Content
 
 
 def home(request, domain=None):
     content_list = Content.objects.all()
     if domain:
-        content_list = content_list.filter(user__company__domain=domain)
+        company = get_object_or_404(Company, domain=domain)
+        content_list = content_list.filter(user__profile__company=company)
     return render(request, 'home.html', locals())
 
 
