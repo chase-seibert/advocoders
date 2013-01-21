@@ -1,3 +1,7 @@
-<a href="{% url socialauth_begin 'google-oauth2' %}?{{ redirect_querystring }}">
-    google-oauth2
-</a>
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="{% url socialauth_begin 'google-oauth2' %}?{{ redirect_querystring }}">
+        google-oauth2
+    </a>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% if request.user.is_authenticated %}
+    <ul>
+        <li>Welcome, {{ request.user.username }}</li>
+        <li><a href="{% url profile %}">profile</a></li>
+        <li><a href="{% url logout %}">logout</a></li>
+    </ul>
+{% else %}
+    <ul>
+        <li> <a href="{% url home %}">home</a></li>
+        <li> <a href="{% url signup %}">signup/login</a></li>
+    </ul>
+{% endif %}
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% block content %}
+{% endblock %}

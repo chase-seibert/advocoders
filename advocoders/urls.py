@@ -8,6 +8,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', 'advocoders.views.home', name='home'),
     url(r'^signup$', 'advocoders.views.signup', name='signup'),
+    url(r'^logout$', 'advocoders.views.logout', name='logout'),
+    url(r'^profile$', 'advocoders.views.profile', name='profile'),
     url(r'', include('social_auth.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

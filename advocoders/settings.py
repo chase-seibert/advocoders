@@ -88,8 +88,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'advocoders.urls'
@@ -111,7 +109,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'django.contrib.messages',
     'social_auth',
+    'advocoders',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -124,11 +124,12 @@ GOOGLE_OAUTH2_CLIENT_ID = '782206201166.apps.googleusercontent.com'
 GOOGLE_OAUTH2_CLIENT_SECRET = 'd74bbVVjSBd59jhO9W2BM4Ix'
 
 LOGIN_URL = '/login-form/'
-LOGIN_REDIRECT_URL = '/logged-in/'
+LOGIN_REDIRECT_URL = ''
 LOGIN_ERROR_URL = '/login-error/'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
     'social_auth.context_processors.social_auth_by_name_backends',
     'social_auth.context_processors.social_auth_backends',
     'social_auth.context_processors.social_auth_by_type_backends',
@@ -139,6 +140,8 @@ SOCIAL_AUTH_DEFAULT_USERNAME = 'Bro Grammer'
 SOCIAL_AUTH_URLOPEN_TIMEOUT = 30
 SOCIAL_AUTH_FORCE_POST_DISCONNECT = True
 SOCIAL_AUTH_SLUGIFY_USERNAMES = True
+
+AUTH_PROFILE_MODULE = 'advocoders.models.Profile'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
