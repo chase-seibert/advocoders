@@ -126,13 +126,25 @@ POSSIBLE_PROVIDERS = (
 
 GOOGLE_OAUTH2_CLIENT_ID = '782206201166.apps.googleusercontent.com'
 GOOGLE_OAUTH2_CLIENT_SECRET = 'd74bbVVjSBd59jhO9W2BM4Ix'
+GOOGLE_OAUTH2_EXTRA_DATA = [
+    ('link', 'link'),
+    ('picture', 'picture'),
+    ('name', 'name'),
+    ('verified_email', 'verified_email'),
+]
 
 GITHUB_APP_ID = '98319ae893e0f9a81427'
 GITHUB_API_SECRET = '0a20d347ad146f71b221ece116f47c1d2cefb192'
+GITHUB_EXTRA_DATA = [
+    ('avatar_url', 'picture'),
+    ('html_url', 'link'),
+    ('login', 'login'),
+    ('name', 'name'),
+]
 
-LOGIN_URL = '/login-form/'
-LOGIN_REDIRECT_URL = ''
-LOGIN_ERROR_URL = '/login-error/'
+LOGIN_URL = '/'
+LOGIN_REDIRECT_URL = '/profile'
+LOGIN_ERROR_URL = '/profile'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
@@ -145,7 +157,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 SOCIAL_AUTH_DEFAULT_USERNAME = 'Bro Grammer'
 SOCIAL_AUTH_URLOPEN_TIMEOUT = 30
-SOCIAL_AUTH_FORCE_POST_DISCONNECT = True
 SOCIAL_AUTH_SLUGIFY_USERNAMES = True
 
 AUTH_PROFILE_MODULE = 'advocoders.models.Profile'
