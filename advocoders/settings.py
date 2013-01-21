@@ -112,6 +112,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'social_auth',
     'advocoders',
+    'kombu.transport.django',
+    'djcelery',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -189,3 +191,8 @@ LOGGING = {
         },
     }
 }
+
+BROKER_BACKEND = 'django'
+
+import djcelery
+djcelery.setup_loader()

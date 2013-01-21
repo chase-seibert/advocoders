@@ -1,2 +1,5 @@
 django
 django-social-auth
+django-celery
+feedparser
+python-dateutil
