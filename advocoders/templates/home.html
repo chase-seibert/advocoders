@@ -1,5 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-    home
+    {% if content_list %}
+        <ul>
+            {% for content in content_list %}
+                <li>
+                    {{ content.date }}:
+                    <a href="{{ content.link }}">{{ content.title }}</a>
+                    <p>
+                        {{ content.user }}
+                    </p>
+                    <p>
+                        {{ content.body|safe }}
+                    </p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}

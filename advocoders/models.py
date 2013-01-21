@@ -65,5 +65,8 @@ class Content(models.Model):
     body = models.TextField()
     date = models.DateTimeField()
 
+    class Meta:
+        ordering = ('-date', )
+
     def __unicode__(self):
         return self.link

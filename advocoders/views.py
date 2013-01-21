@@ -6,9 +6,13 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from advocoders.models import Profile
 from advocoders.forms import ProfileForm
+from advocoders.models import Content
 
 
-def home(request):
+def home(request, domain=None):
+    content_list = Content.objects.all()
+    if domain:
+        content_list = content_list.filter(user__company__domain=domain)
     return render(request, 'home.html', locals())
 
 
