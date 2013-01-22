@@ -6,3 +6,5 @@ python-dateutil
 BeautifulSoup
 Pygments
 bleach
+dj-database-url
+psycopg2
