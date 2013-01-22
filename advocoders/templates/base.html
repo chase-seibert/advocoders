@@ -6,7 +6,11 @@
 {% if request.user.is_authenticated %}
     <ul>
         <li>Welcome, {{ request.user.username }}</li>
-        <li><a href="{% url home %}">home</a></li>
+        {% if request.user.profile.company %}
+            <li><a href="{% url feed_company request.user.profile.company.domain %}">home</a></li>
+        {% else %}
+            <li><a href="{% url home %}">home</a></li>
+        {% endif %}
         <li><a href="{% url profile %}">profile</a></li>
         <li><a href="{% url logout %}">logout</a></li>
     </ul>

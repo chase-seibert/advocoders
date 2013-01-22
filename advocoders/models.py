@@ -17,8 +17,8 @@ class Profile(models.Model):
     company = models.ForeignKey(Company, null=True)
     picture = models.ForeignKey(UserSocialAuth, null=True)
     title = models.CharField(max_length=255)
-    blog = models.URLField()
-    stackoverflow = models.URLField()
+    blog = models.URLField(verbose_name='Your blog RSS feed URL')
+    stackoverflow = models.URLField(verbose_name='Your stackoverflow profile URL')
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):

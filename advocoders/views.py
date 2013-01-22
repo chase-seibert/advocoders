@@ -19,6 +19,8 @@ def home(request, domain=None, provider=None):
         content_list = content_list.filter(user__profile__company=company)
     if provider:
         content_list = content_list.filter(provider=provider)
+    else:
+        content_list = content_list.exclude(provider='github')
     page = request.GET.get('page', 1)
     paginator = Paginator(content_list, 10)
     content_list = paginator.page(page)

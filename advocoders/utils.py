@@ -12,26 +12,33 @@ from advocoders.models import Profile
 def update_feeds(*args, **kwargs):
     for profile in Profile.objects.all():
         for provider, rss_url in profile.rss_urls:
+            try:
+                update_feed(profile, provider, rss_url)
+            except Exception, e:
+                print e
 
-            Content.objects.filter(
-                user=profile.user,
-                provider=provider).delete()
 
-            print rss_url
-            feed = feedparser.parse(rss_url)
-            for entry in feed.get('entries')[:10]:
-                content = Content()
-                content.user = profile.user
-                content.provider = provider
-                content.title = entry.title
-                content.link = entry.link
-                content.date = dateutil_parse(entry.updated)
-                content.mime_type, content.body = get_body_and_mime_type(entry)
-                if content.mime_type == 'text/html':
-                    klass = 'code' if provider == 'stackoverflow' else 'pre'
-                    content.body = sanitize_html(content.body)
-                    content.body = highlight_code_inside_html(content.body, klass)
-                content.save()
+def update_feed(profile, provider, rss_url):
+
+    Content.objects.filter(
+        user=profile.user,
+        provider=provider).delete()
+
+    print rss_url
+    feed = feedparser.parse(rss_url)
+    for entry in feed.get('entries')[:10]:
+        content = Content()
+        content.user = profile.user
+        content.provider = provider
+        content.title = entry.title
+        content.link = entry.link
+        content.date = dateutil_parse(entry.updated)
+        content.mime_type, content.body = get_body_and_mime_type(entry)
+        if content.mime_type == 'text/html':
+            klass = 'code' if provider == 'stackoverflow' else 'pre'
+            content.body = sanitize_html(content.body)
+            content.body = highlight_code_inside_html(content.body, klass)
+        content.save()
 
 
 def get_body_and_mime_type(entry):
