@@ -46,6 +46,9 @@ def get_domain(email):
 def highlight_code_inside_html(html, klass='pre'):
     ''' from: http://stefan.sofa-rockers.org/2010/01/13/django-highlighting-html-using-pygments-and-beauti '''
     soup = BeautifulSoup(html)
+    highlighted_already = soup.findAll('div', 'highlight')
+    if highlighted_already:
+        return html
     codeblocks = soup.findAll(klass)
     for block in codeblocks:
         try:
