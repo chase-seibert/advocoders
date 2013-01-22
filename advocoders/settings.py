@@ -123,8 +123,8 @@ POSSIBLE_PROVIDERS = (
     'github',
 )
 
-GOOGLE_OAUTH2_CLIENT_ID = '782206201166.apps.googleusercontent.com'
-GOOGLE_OAUTH2_CLIENT_SECRET = 'd74bbVVjSBd59jhO9W2BM4Ix'
+GOOGLE_OAUTH2_CLIENT_ID = os.environ.get('GOOGLE_OAUTH2_CLIENT_ID', '782206201166.apps.googleusercontent.com')
+GOOGLE_OAUTH2_CLIENT_SECRET = os.environ.get('GOOGLE_OAUTH2_CLIENT_SECRET', 'd74bbVVjSBd59jhO9W2BM4Ix')
 GOOGLE_OAUTH2_EXTRA_DATA = [
     ('link', 'link'),
     ('picture', 'picture'),
@@ -132,8 +132,8 @@ GOOGLE_OAUTH2_EXTRA_DATA = [
     ('verified_email', 'verified_email'),
 ]
 
-GITHUB_APP_ID = '98319ae893e0f9a81427'
-GITHUB_API_SECRET = '0a20d347ad146f71b221ece116f47c1d2cefb192'
+GITHUB_APP_ID = os.environ.get('GITHUB_APP_ID', '98319ae893e0f9a81427')
+GITHUB_API_SECRET = os.environ.get('GITHUB_API_SECRET', '0a20d347ad146f71b221ece116f47c1d2cefb192')
 GITHUB_EXTRA_DATA = [
     ('avatar_url', 'picture'),
     ('html_url', 'link'),
@@ -195,6 +195,7 @@ BROKER_BACKEND = 'django'
 import djcelery
 djcelery.setup_loader()
 
-# Parse database configuration from $DATABASE_URL
-import dj_database_url
-DATABASES['default'] = dj_database_url.config()
+if os.environ.get('DATABASE_URL'):
+    # Parse database configuration from $DATABASE_URL
+    import dj_database_url
+    DATABASES['default'] = dj_database_url.config()
