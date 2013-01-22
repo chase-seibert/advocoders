@@ -11,11 +11,13 @@ from advocoders.models import Company
 from advocoders.models import Content
 
 
-def home(request, domain=None):
+def home(request, domain=None, provider=None):
     content_list = Content.objects.all()
     if domain:
         company = get_object_or_404(Company, domain=domain)
         content_list = content_list.filter(user__profile__company=company)
+    if provider:
+        content_list = content_list.filter(provider=provider)
     return render(request, 'home.html', locals())
 
 

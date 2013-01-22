@@ -21,8 +21,12 @@ def update_feeds(*args, **kwargs):
                 content.title = entry.title
                 content.link = entry.link
                 content.date = dateutil_parse(entry.updated)
-                content.mime_type = entry.content[0].type
-                content.body = entry.content[0].value
+                try:
+                    content.mime_type = entry.content[0].type
+                    content.body = entry.content[0].value
+                except AttributeError:
+                    content.mime_type = 'text/html'
+                    content.body = entry.summary
                 content.save()
 
 

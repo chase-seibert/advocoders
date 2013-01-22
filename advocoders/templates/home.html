@@ -8,7 +8,8 @@
                     {{ content.date }}:
                     <a href="{{ content.link }}">{{ content.title }}</a>
                     <p>
-                        {{ content.user }}
+                    <img src="{{ content.user.profile.picture_url }}" height="50px">
+                    {{ content.user }}
                     </p>
                     <p>
                         {{ content.body|safe }}
