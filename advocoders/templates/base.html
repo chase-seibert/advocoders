@@ -1,3 +1,8 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css" media="screen" />
+<link rel="stylesheet" href="{% static 'css/pygments.css' %}" type="text/css" media="screen" />
+
 {% if request.user.is_authenticated %}
     <ul>
         <li>Welcome, {{ request.user.username }}</li>
