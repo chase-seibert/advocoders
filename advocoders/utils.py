@@ -4,6 +4,7 @@ from BeautifulSoup import BeautifulSoup
 import pygments
 import pygments.formatters
 import pygments.lexers
+import bleach
 from advocoders.models import Content
 from advocoders.models import Profile
 
@@ -28,6 +29,7 @@ def update_feeds(*args, **kwargs):
                 content.mime_type, content.body = get_body_and_mime_type(entry)
                 if content.mime_type == 'text/html':
                     klass = 'code' if provider == 'stackoverflow' else 'pre'
+                    content.body = sanitize_html(content.body)
                     content.body = highlight_code_inside_html(content.body, klass)
                 content.save()
 
@@ -41,6 +43,14 @@ def get_body_and_mime_type(entry):
 
 def get_domain(email):
     return email.split('@')[1]
+
+
+def sanitize_html(html):
+    return bleach.clean(
+        html,
+        tags=bleach.ALLOWED_TAGS + ['p', 'pre', 'div', 'span'],
+        attributes=['a', 'class'],
+        strip=True)
 
 
 def highlight_code_inside_html(html, klass='pre'):

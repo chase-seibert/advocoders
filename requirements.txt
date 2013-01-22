@@ -5,3 +5,4 @@ feedparser
 python-dateutil
 BeautifulSoup
 Pygments
+bleach
