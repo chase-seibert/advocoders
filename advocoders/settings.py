@@ -111,6 +111,7 @@ INSTALLED_APPS = (
     'advocoders',
     'kombu.transport.django',
     'djcelery',
+    'gunicorn',
 )
 
 AUTHENTICATION_BACKENDS = (
