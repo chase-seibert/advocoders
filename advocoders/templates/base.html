@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{% static 'css/pygments.css' %}" type="text/css" media="screen" />
 
 {% if request.user.is_authenticated %}
-    <ul>
+    <ul class="header">
         <li>Welcome, {{ request.user.username }}</li>
         {% if request.user.profile.company %}
             <li><a href="{% url feed_company request.user.profile.company.domain %}">home</a></li>
@@ -15,7 +15,7 @@
         <li><a href="{% url logout %}">logout</a></li>
     </ul>
 {% else %}
-    <ul>
+    <ul class="header">
         <li> <a href="{% url home %}">home</a></li>
         <li> <a href="{% url socialauth_begin 'google-oauth2' %}?{{ redirect_querystring }}">login</a></li>
     </ul>

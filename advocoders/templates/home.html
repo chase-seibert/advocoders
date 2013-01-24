@@ -3,11 +3,13 @@
 {% block content %}
 
     {% if content_list %}
-        <ul>
+        <ul class="content">
             {% for content in content_list %}
                 <li>
-                    {{ content.date }}:
-                    <a href="{{ content.link }}">{{ content.title }}</a>
+                    <div class="title">
+                        {{ content.date }}:
+                        <a href="{{ content.link }}">{{ content.title }}</a>
+                    </div>
                     <p>
                     <img src="{{ content.user.profile.picture_url }}" height="50px">
                     {{ content.user.first_name }}

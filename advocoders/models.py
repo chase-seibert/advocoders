@@ -16,7 +16,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User)
     company = models.ForeignKey(Company, null=True)
     picture = models.ForeignKey(UserSocialAuth, null=True)
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, blank=True)
     blog = models.URLField(verbose_name='Your blog RSS feed URL')
     stackoverflow = models.URLField(verbose_name='Your stackoverflow profile URL')
     date_added = models.DateTimeField(auto_now_add=True)
