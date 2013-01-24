@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
 from social_auth.models import UserSocialAuth
-import signals  # DO NOT REMOVE; register singals
 
 
 class Company(models.Model):
