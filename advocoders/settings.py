@@ -117,11 +117,13 @@ INSTALLED_APPS = (
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.google.GoogleOAuth2Backend',
     'social_auth.backends.contrib.github.GithubBackend',
+    'social_auth.backends.contrib.stackoverflow.StackoverflowBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
 POSSIBLE_PROVIDERS = (
     'github',
+    'stackoverflow',
 )
 
 GOOGLE_OAUTH2_CLIENT_ID = os.environ.get('GOOGLE_OAUTH2_CLIENT_ID', '782206201166.apps.googleusercontent.com')
@@ -140,6 +142,15 @@ GITHUB_EXTRA_DATA = [
     ('html_url', 'link'),
     ('login', 'login'),
     ('name', 'name'),
+]
+
+STACKOVERFLOW_CLIENT_ID = os.environ.get('STACKOVERFLOW_CLIENT_ID', '1123')
+STACKOVERFLOW_CLIENT_SECRET = os.environ.get('STACKOVERFLOW_CLIENT_SECRET', 'Xz8hGObV1KbiglfvNv05GQ((')
+STACKOVERFLOW_KEY = os.environ.get('STACKOVERFLOW_KEY', 'tMmkTZD)pXDLOga8*1NgNw((')
+STACKOVERFLOW_EXTRA_DATA = [
+    ('profile_image', 'picture'),
+    ('link', 'link'),
+    ('display_name', 'name'),
 ]
 
 LOGIN_URL = '/'
