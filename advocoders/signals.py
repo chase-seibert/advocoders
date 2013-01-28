@@ -16,4 +16,6 @@ def user_post_save(sender, instance, **kwargs):
 def social_auth_extra_values(sender, instance, **kwargs):
     if instance.provider == 'github':
         instance.extra_data['rss_url'] = 'https://github.com/%s.atom' % instance.extra_data.get('login')
+    if instance.provider == 'stackoverflow':
+        instance.extra_data['rss_url'] = 'http://stackoverflow.com/feeds/user/%s' % instance.uid
     return instance

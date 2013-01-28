@@ -18,7 +18,6 @@ class Profile(models.Model):
     picture = models.ForeignKey(UserSocialAuth, null=True)
     title = models.CharField(max_length=255, blank=True)
     blog = models.URLField(verbose_name='Your blog RSS feed URL')
-    stackoverflow = models.URLField(verbose_name='Your stackoverflow profile URL')
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
@@ -51,8 +50,6 @@ class Profile(models.Model):
     def rss_urls(self):
         if self.blog:
             yield ('blog', self.blog)
-        if self.stackoverflow:
-            yield ('stackoverflow', self.stackoverflow)
         for social_auth in self.user.social_auth.all():
             rss_url = social_auth.extra_data.get('rss_url')
             if rss_url:
