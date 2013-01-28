@@ -1,5 +1,5 @@
 django
-git+https://github.com/chase-seibert/django-social-auth.git
+git+git://github.com/chase-seibert/django-social-auth.git
 django-celery
 feedparser
 python-dateutil
