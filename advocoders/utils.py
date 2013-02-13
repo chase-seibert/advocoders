@@ -35,9 +35,7 @@ def update_feed(profile, provider, rss_url):
         content.date = dateutil_parse(entry.updated)
         content.mime_type, content.body = get_body_and_mime_type(entry)
         if content.mime_type == 'text/html':
-            klass = 'code' if provider == 'stackoverflow' else 'pre'
-            content.body = sanitize_html(content.body)
-            content.body = highlight_code_inside_html(content.body, klass)
+            content.body = santize_and_hightlight_html(content.body)
         content.save()
 
 
@@ -52,10 +50,16 @@ def get_domain(email):
     return email.split('@')[1]
 
 
+def santize_and_hightlight_html(html, provider=None):
+    klass = 'pre'  # may need to do something different per provider
+    html = sanitize_html(html)
+    return highlight_code_inside_html(html, klass)
+
+
 def sanitize_html(html):
     return bleach.clean(
         html,
-        tags=bleach.ALLOWED_TAGS + ['p', 'pre', 'div', 'span'],
+        tags=bleach.ALLOWED_TAGS + ['p', 'pre', 'div', 'span', 'br'],
         attributes=['a', 'class'],
         strip=True)
 
@@ -69,12 +73,11 @@ def highlight_code_inside_html(html, klass='pre'):
     codeblocks = soup.findAll(klass)
     for block in codeblocks:
         try:
-            code = ''.join([unicode(item) for item in block.contents])
+            code = ''.join(block.findAll(text=True))
             lexer = pygments.lexers.guess_lexer(code)
             formatter = pygments.formatters.HtmlFormatter()
             code_hl = pygments.highlight(code, lexer, formatter)
-            block.contents = [BeautifulSoup(code_hl)]
-            block.name = 'code'
+            block.replaceWith(BeautifulSoup(code_hl))
         except Exception, e:
             print 'Exception in highlight_code_inside_html: %s' % e
-    return unicode(soup)
+    return ''.join(unicode(soup).split('\n'))

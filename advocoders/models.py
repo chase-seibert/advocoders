@@ -14,9 +14,9 @@ class Company(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User)
-    company = models.ForeignKey(Company, null=True)
-    picture = models.ForeignKey(UserSocialAuth, null=True)
-    title = models.CharField(max_length=255, blank=True)
+    company = models.ForeignKey(Company, null=True, verbose_name='Company you want to associate with')
+    picture = models.ForeignKey(UserSocialAuth, null=True, verbose_name='Picture you want to use')
+    title = models.CharField(max_length=255, blank=True, verbose_name="Your job title")
     blog = models.URLField(verbose_name='Your blog RSS feed URL')
     date_added = models.DateTimeField(auto_now_add=True)
 
