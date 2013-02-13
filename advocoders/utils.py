@@ -80,7 +80,7 @@ def sanitize_html(html):
         tags=bleach.ALLOWED_TAGS + ['p', 'pre', 'div', 'span', 'br', 'table', 'tr', 'td',
             'tbody', 'thead', 'th', 'a', 'blockquote', 'ul', 'li', 'ol', 'b', 'em', 'i',
             'strong', 'u', 'font'],
-        attributes=['a', 'class'],
+        attributes=['a', 'class', 'href', 'color', 'size', 'bgcolor', 'border', 'style', ],
         strip=True)
 
 
