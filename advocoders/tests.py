@@ -8,6 +8,14 @@ class HtmlSanitiztionTests(unittest.TestCase):
     def test_script(self):
         self.assertEquals(sanitize_html('foobar<script src="//hack.me/danger.js">'), 'foobar')
 
+    def test_html_decode(self):
+        self.assertEquals(santize_and_hightlight_html('&lt;'),
+            '<')
+
+    def test_html_decode_aleady(self):
+        self.assertEquals(santize_and_hightlight_html('<p>foobar</p>'),
+            '<p>foobar</p>')
+
 
 class HighlightCodeTests(unittest.TestCase):
 

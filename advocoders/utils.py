@@ -6,6 +6,7 @@ import pygments
 import pygments.formatters
 import pygments.lexers
 import bleach
+import HTMLParser
 from advocoders.models import Content
 from advocoders.models import Profile
 
@@ -62,6 +63,9 @@ def post_process(html):
     ''' replace whitelisted tokens w/ safe html '''
     html = re.sub('ADVO_GIST:([0-9]+)',
         '<script src="//gist.github.com/\\1.js"></script>', html)
+    html = re.sub('<p style=..>&nbsp;</p>', '', html)
+    _htmlparser = HTMLParser.HTMLParser()
+    html = _htmlparser.unescape(html)
     return html
 
 

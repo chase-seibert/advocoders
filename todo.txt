@@ -1,3 +1,2 @@
-blog/rss url resolution - django plugin?
-tests for source code formatting
-    gist
+html decode + tests
+gist test
