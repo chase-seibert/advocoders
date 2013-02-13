@@ -8,10 +8,6 @@ class HtmlSanitiztionTests(unittest.TestCase):
     def test_script(self):
         self.assertEquals(sanitize_html('foobar<script src="//hack.me/danger.js">'), 'foobar')
 
-    def test_html_decode(self):
-        self.assertEquals(santize_and_hightlight_html('&lt;'),
-            '<')
-
     def test_html_decode_aleady(self):
         self.assertEquals(santize_and_hightlight_html('<p>foobar</p>'),
             '<p>foobar</p>')
@@ -57,6 +53,11 @@ class HighlightCodeTests(unittest.TestCase):
         self.assertEquals(santize_and_hightlight_html(
             u'<pre>foobar\nfoobar</pre>'),
             u'<div class="highlight"><pre><span class="n">foobar</span>\n<span class="n">foobar</span>\n</pre></div>\n')
+
+    def test_pre_encoded(self):
+        self.assertEquals(santize_and_hightlight_html(
+            u'<div class="code"><pre>&gt;&gt;&gt; print type("%s" % a)&lt;type \'str\'&gt; &lt;type \'unicode\'&gt;</pre></div>'),
+            u'<div class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">print</span> <span class="n">type</span><span class="p">(</span><span class="s">&quot;%s&quot;</span> <span class="o">%</span> <span class="n">a</span><span class="p">)</span> \n</pre></div>\n</div>')
 
 
 if __name__ == '__main__':

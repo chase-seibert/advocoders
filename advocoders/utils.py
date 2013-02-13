@@ -58,6 +58,8 @@ def pre_process(html):
         'ADVO_GIST:\\1', html)
     html = re.sub('<a href=.http.?://gist.github.com/([0-9]+).>http.?://gist.github.com/[0-9]+</a>',
         'ADVO_GIST:\\1', html)
+    _htmlparser = HTMLParser.HTMLParser()
+    html = _htmlparser.unescape(html)
     return html
 
 
@@ -67,8 +69,6 @@ def post_process(html):
         '<script src="//gist.github.com/\\1.js"></script>', html)
     html = re.sub('<p style=..>&nbsp;</p>', '', html)
     html = re.sub('<p style="">\xa0</p>', '', html)
-    _htmlparser = HTMLParser.HTMLParser()
-    html = _htmlparser.unescape(html)
     return html
 
 
@@ -101,6 +101,8 @@ def highlight_code_inside_html(html, klass='pre'):
     for block in codeblocks:
         try:
             code = ''.join(block.findAll(text=True))
+            _htmlparser = HTMLParser.HTMLParser()
+            code = _htmlparser.unescape(code)
             lexer = pygments.lexers.guess_lexer(code)
             formatter = pygments.formatters.HtmlFormatter()
             code_hl = pygments.highlight(code, lexer, formatter)
