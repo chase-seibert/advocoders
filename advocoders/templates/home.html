@@ -3,39 +3,51 @@
 {% block content %}
 
     {% if content_list %}
-        <ul class="content">
-            {% for content in content_list %}
-                <li>
-                    <div class="title">
-                        {{ content.date }}:
-                        <a href="{{ content.link }}">{{ content.title }}</a>
-                    </div>
-                    <p>
-                    <img src="{{ content.user.profile.picture_url }}" height="50px">
-                    {{ content.user.first_name }}
-                    </p>
+        {% for content in content_list %}
+            <div class="media">
+                <a class="pull-left" href="#">
+                    <img class="media-object" src="{{ content.user.profile.picture_url }}" width="50px">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a href="{{ content.link }}">
+                            {{ content.title }}
+                        </a>
+                    </h4>
+                    <span class="muted">{{ content.date }}</span>
+                    by {{ content.user.first_name }}
                     <p>
                         {{ content.body|safe }}
                     </p>
-                </li>
-            {% endfor %}
-        </ul>
+                </div>
+            </div>
+        {% endfor %}
     {% endif %}
 
     <div class="pagination">
-        <span class="step-links">
+        <ul>
             {% if content_list.has_previous %}
-                <a href="?page={{ content_list.previous_page_number }}">previous</a>
+                <li><a href="?page={{ content_list.previous_page_number }}" class="prev">Prev</a></li>
+            {% else %}
+                <li class="disabled prev"><a href="#">Prev</a></li>
             {% endif %}
-
-            <span class="current">
-                Page {{ content_list.number }} of {{ content_list.paginator.num_pages }}.
-            </span>
-
+            {% for page in pages %}
+                {% if page %}
+                    {% ifequal page content_list.number %}
+                        <li class="current page active"><a href="#">{{ page }}</a></li>
+                    {% else %}
+                        <li><a href="?page={{ page }}" class="page">{{ page }}</a></li>
+                    {% endifequal %}
+                {% else %}
+                    ...
+                {% endif %}
+            {% endfor %}
             {% if content_list.has_next %}
-                <a href="?page={{ content_list.next_page_number }}">next</a>
+                <li><a href="?page={{ content_list.next_page_number }}" class="next">Next</a></li>
+            {% else %}
+                <li class="disabled next"><a href="#">Next</a></li>
             {% endif %}
-        </span>
+        </ul>
     </div>
 
 {% endblock %}

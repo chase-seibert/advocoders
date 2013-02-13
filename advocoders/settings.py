@@ -113,6 +113,7 @@ INSTALLED_APPS = (
     'djcelery',
     'gunicorn',
     'south',
+    'crispy_forms',
 )
 
 AUTHENTICATION_BACKENDS = (

@@ -1,22 +1,41 @@
 {% extends "base.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit">
-    </form>
-    {% if request.user.profile%}
-        <ul>
-            {% for provider, account in request.user.profile.possible_accounts.items %}
-                <li>
-                    {% if account %}
-                        {{ provider }} - <a href="{% url socialauth_disconnect provider %}">disconnect</a>
-                    {% else %}
-                        {{ provider }} - <a href="{% url socialauth_begin provider %}">connect</a>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    <div class="row">
+        <div class="span4 offset1">
+            <form method="post">
+                <legend>Your Profile</legend>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input class="btn btn-primary" type="submit">
+            </form>
+        </div>
+        <div class="span4 offset1">
+            {% if request.user.profile%}
+                <legend>Your Linked Accounts</legend>
+                <dl>
+                    {% for provider, account in request.user.profile.possible_accounts.items %}
+                    <dt>{{ provider|title }}</dt>
+                    <dd>
+                        {% if provider == "github" %}
+                            Hook up your GitHub accout to display your recent public repository commits in your company feed.
+                        {% endif %}
+                        {% if provider == "stackoverflow" %}
+                            Gook up your Stackoverflow account to displauy your recent questions and responses in your company feed.
+                            {% endif %}
+                        <p>
+                            {% if account %}
+                                <a href="{% url socialauth_disconnect provider %}" class="btn">disconnect</a>
+                            {% else %}
+                                <a href="{% url socialauth_begin provider %}" class="btn btn-primary">connect</a>
+                            {% endif %}
+                        </p>
+                    </dd>
+                    {% endfor %}
+                </dl>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

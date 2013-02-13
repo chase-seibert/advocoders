@@ -1,33 +1,65 @@
 {% load staticfiles %}
 
-<link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css" media="screen" />
-<link rel="stylesheet" href="{% static 'css/pygments.css' %}" type="text/css" media="screen" />
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title%}Advocoders - Meta Blogging for Engineering Teams{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" media="screen">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-responsive.min.css' %}" media="screen">
+        <link rel="stylesheet" href="{% static 'css/pygments.css' %}" type="text/css" media="screen" />
+        <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css" media="screen" />
+    </head>
+    <body>
 
-{% if request.user.is_authenticated %}
-    <ul class="header">
-        <li>Welcome, {{ request.user.username }}</li>
-        {% if request.user.profile.company %}
-            <li><a href="{% url feed_company request.user.profile.company.domain %}">home</a></li>
-        {% else %}
-            <li><a href="{% url home %}">home</a></li>
-        {% endif %}
-        <li><a href="{% url profile %}">profile</a></li>
-        <li><a href="{% url logout %}">logout</a></li>
-    </ul>
-{% else %}
-    <ul class="header">
-        <li> <a href="{% url home %}">home</a></li>
-        <li> <a href="{% url socialauth_begin 'google-oauth2' %}?{{ redirect_querystring }}">login</a></li>
-    </ul>
-{% endif %}
+        <div class="navbar navbar-inverse">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="/">Advocoders</a>
+                    <div class="nav-collapse collapse">
 
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
+                        {% if request.user.is_authenticated %}
+                            <ul class="nav">
+                                {% if request.user.profile.company %}
+                                    <li class="active"><a href="{% url feed_company request.user.profile.company.domain %}">Home</a></li>
+                                {% else %}
+                                    <li class="active"><a href="{% url home %}">Home</a></li>
+                                {% endif %}
+                                <li><a href="{% url profile %}">Profile</a></li>
+                            </ul>
+                            <ul class="nav pull-right">
+                                <li>Welcome, {{ request.user.username }}</li>
+                                <li><a href="{% url logout %}">Logout</a></li>
+                            </ul>
+                        {% else %}
+                            <ul class="nav">
+                                <li><a href="{% url home %}">Home</a></li>
+                            </ul>
+                            <ul class="nav pull-right">
+                                <li><a href="{% url socialauth_begin 'google-oauth2' %}?{{ redirect_querystring }}">Login/Signup</a></li>
+                            </ul>
+                        {% endif %}
 
-{% block content %}
-{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span10 offset2">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    </body>
+</html>

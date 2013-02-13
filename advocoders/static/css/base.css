@@ -1,38 +1,11 @@
-body {
-    color: #0F0F0F;
-    background-color: #EDEEE9;
+pre pre {
+    border: none;
 }
 
-.content {
-    width: 800px;
-    margin: auto;
+.highlight .err {
+    border: none;
 }
 
-li {
-    list-style: none;
-}
-
-.header {
-    width: 100%;
-}
-
-.header li {
-    display: inline;
-}
-
-.pagination {
-    width: 800px;
-    margin: auto;
-    padding: 1em;
-    float: right;
-}
-
-.title {
-    font-weight: bold;
-}
-
-.errorlist {
-    border: 1px solid red;
-    background: pink;
-    font-weight: bold;
+pre {
+    font-size: 12px;
 }
