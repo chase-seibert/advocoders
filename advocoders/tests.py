@@ -20,23 +20,28 @@ class HighlightCodeTests(unittest.TestCase):
     def test_pre(self):
         self.assertEquals(santize_and_hightlight_html(
             u'<pre>foobar</pre>'),
-            u'<div class="highlight"><pre><span class="n">foobar</span></pre></div>')
+            u'<div class="highlight"><pre><span class="n">foobar</span>\n</pre></div>\n')
 
     def test_stackoverflow(self):
         self.assertEquals(santize_and_hightlight_html(provider='stackoverflow', html=
             u'<pre><code>foobar</code></pre>'),
-            u'<div class="highlight"><pre><span class="n">foobar</span></pre></div>')
+            u'<div class="highlight"><pre><span class="n">foobar</span>\n</pre></div>\n')
 
     def test_posterous(self):
         self.assertEquals(santize_and_hightlight_html(
             u'<div class="code"><pre>foobar</pre></div>'),
-            u'<div class="code"><div class="highlight"><pre><span class="n">foobar</span></pre></div></div>')
+            u'<div class="code"><div class="highlight"><pre><span class="n">foobar</span>\n</pre></div>\n</div>')
 
     def test_gist(self):
         ''' scripts from this domain alone should be allowed '''
         self.assertEquals(santize_and_hightlight_html(
             u'<script src="https://gist.github.com/2635479.js"></script>'),
             u'<script src="//gist.github.com/2635479.js"></script>')
+
+    def test_newlines(self):
+        self.assertEquals(santize_and_hightlight_html(
+            u'<pre>foobar\nfoobar</pre>'),
+            u'<div class="highlight"><pre><span class="n">foobar</span>\n<span class="n">foobar</span>\n</pre></div>\n')
 
 
 if __name__ == '__main__':

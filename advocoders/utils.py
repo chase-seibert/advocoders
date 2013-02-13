@@ -98,4 +98,4 @@ def highlight_code_inside_html(html, klass='pre'):
             block.replaceWith(BeautifulSoup(code_hl))
         except Exception, e:
             print 'Exception in highlight_code_inside_html: %s' % e
-    return ''.join(unicode(soup).split('\n'))
+    return unicode(soup)
