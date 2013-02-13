@@ -27,6 +27,17 @@ class HighlightCodeTests(unittest.TestCase):
             u'<pre><code>foobar</code></pre>'),
             u'<div class="highlight"><pre><span class="n">foobar</span></pre></div>')
 
+    def test_posterous(self):
+        self.assertEquals(santize_and_hightlight_html(
+            u'<div class="code"><pre>foobar</pre></div>'),
+            u'<div class="code"><div class="highlight"><pre><span class="n">foobar</span></pre></div></div>')
+
+    def test_gist(self):
+        ''' scripts from this domain alone should be allowed '''
+        self.assertEquals(santize_and_hightlight_html(
+            u'<script src="https://gist.github.com/2635479.js"></script>'),
+            u'<script src="//gist.github.com/2635479.js"></script>')
+
 
 if __name__ == '__main__':
     unittest.main()

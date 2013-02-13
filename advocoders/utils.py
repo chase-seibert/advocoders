@@ -1,3 +1,4 @@
+import re
 import feedparser
 from dateutil.parser import parse as dateutil_parse
 from BeautifulSoup import BeautifulSoup
@@ -50,10 +51,27 @@ def get_domain(email):
     return email.split('@')[1]
 
 
+def pre_process(html):
+    ''' replace whitelisted html w/ tokens '''
+    html = re.sub('<script src=.http.://gist.github.com/([0-9]+).js.></script>',
+        'ADVO_GIST:\\1', html)
+    return html
+
+
+def post_process(html):
+    ''' replace whitelisted tokens w/ safe html '''
+    html = re.sub('ADVO_GIST:([0-9]+)',
+        '<script src="//gist.github.com/\\1.js"></script>', html)
+    return html
+
+
 def santize_and_hightlight_html(html, provider=None):
     klass = 'pre'  # may need to do something different per provider
+    html = pre_process(html)
     html = sanitize_html(html)
-    return highlight_code_inside_html(html, klass)
+    html = highlight_code_inside_html(html, klass)
+    html = post_process(html)
+    return html
 
 
 def sanitize_html(html):
