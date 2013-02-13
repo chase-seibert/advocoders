@@ -16,6 +16,10 @@ class HtmlSanitiztionTests(unittest.TestCase):
         self.assertEquals(santize_and_hightlight_html('<p>foobar</p>'),
             '<p>foobar</p>')
 
+    def test_empty_paragraphs(self):
+        self.assertEquals(santize_and_hightlight_html('<p style="margin: 0px; font-family: Times New Roman; font-size: medium;">&nbsp;</p>'),
+            '')
+
 
 class HighlightCodeTests(unittest.TestCase):
 
@@ -44,6 +48,9 @@ class HighlightCodeTests(unittest.TestCase):
         ''' scripts from this domain alone should be allowed '''
         self.assertEquals(santize_and_hightlight_html(
             u'<script src="https://gist.github.com/2635479.js"></script>'),
+            u'<script src="//gist.github.com/2635479.js"></script>')
+        self.assertEquals(santize_and_hightlight_html(
+            u'<a href="https://gist.github.com/2635479">https://gist.github.com/2635479</a>'),
             u'<script src="//gist.github.com/2635479.js"></script>')
 
     def test_newlines(self):

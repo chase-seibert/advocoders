@@ -54,7 +54,9 @@ def get_domain(email):
 
 def pre_process(html):
     ''' replace whitelisted html w/ tokens '''
-    html = re.sub('<script src=.http.://gist.github.com/([0-9]+).js.></script>',
+    html = re.sub('<script src=.http.?://gist.github.com/([0-9]+).js.></script>',
+        'ADVO_GIST:\\1', html)
+    html = re.sub('<a href=.http.?://gist.github.com/([0-9]+).>http.?://gist.github.com/[0-9]+</a>',
         'ADVO_GIST:\\1', html)
     return html
 
@@ -64,6 +66,7 @@ def post_process(html):
     html = re.sub('ADVO_GIST:([0-9]+)',
         '<script src="//gist.github.com/\\1.js"></script>', html)
     html = re.sub('<p style=..>&nbsp;</p>', '', html)
+    html = re.sub('<p style="">\xa0</p>', '', html)
     _htmlparser = HTMLParser.HTMLParser()
     html = _htmlparser.unescape(html)
     return html
