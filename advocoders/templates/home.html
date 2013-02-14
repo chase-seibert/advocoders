@@ -1,53 +1,64 @@
 {% extends "base.html" %}
 
+{% block header %}
+{% endblock %}
+
 {% block content %}
 
-    {% if content_list %}
-        {% for content in content_list %}
-            <div class="media">
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="{{ content.user.profile.picture_url }}" width="50px">
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading">
-                        <a href="{{ content.link }}">
-                            {{ content.title }}
-                        </a>
-                    </h4>
-                    <span class="muted">{{ content.date }}</span>
-                    by {{ content.user.first_name }}
-                    <p>
-                        {{ content.body|safe }}
-                    </p>
-                </div>
-            </div>
-        {% endfor %}
-    {% endif %}
+    <div class="hero-unit">
 
-    <div class="pagination">
-        <ul>
-            {% if content_list.has_previous %}
-                <li><a href="?page={{ content_list.previous_page_number }}" class="prev">Prev</a></li>
-            {% else %}
-                <li class="disabled prev"><a href="#">Prev</a></li>
-            {% endif %}
-            {% for page in pages %}
-                {% if page %}
-                    {% ifequal page content_list.number %}
-                        <li class="current page active"><a href="#">{{ page }}</a></li>
-                    {% else %}
-                        <li><a href="?page={{ page }}" class="page">{{ page }}</a></li>
-                    {% endifequal %}
-                {% else %}
-                    ...
+        <div class="row-fluid">
+            <h1>Advocoders: <small>Showcase Your Engineers</small></h1>
+        </div>
+
+        <div class="row-fluid vertical-offset1">
+
+            <div class="span8">
+                <p>
+                    <ol>
+                        <li>Login with Google Apps</li>
+                        <li>Link your GutHub, Stackoverflow and personal blog</li>
+                        <li>Your content will be merged into a feed for your team</li>
+                    </ol>
+                </p>
+                {% if recent_companies %}
+                    <p>
+                        <h3>Example feeds</h3>
+                        {% for company in recent_companies %}
+                            <div class="media">
+                                <a class="pull-left" href="{% url feed_company company.domain %}">
+                                    <img class="img-portrait fixed-height" src="{{ company.logo }}">
+                                </a>
+                                <div class="media-body">
+                                    <h4 class="media-heading"><a href="{% url feed_company company.domain %}">{{ company }}</a></h4>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </p>
                 {% endif %}
-            {% endfor %}
-            {% if content_list.has_next %}
-                <li><a href="?page={{ content_list.next_page_number }}" class="next">Next</a></li>
-            {% else %}
-                <li class="disabled next"><a href="#">Next</a></li>
-            {% endif %}
-        </ul>
+            </div>
+
+            <div class="span3 offset1">
+                <p>
+                    <a class="btn btn-primary btn-large" href="{% url socialauth_begin 'google-oauth2' %}?{{ redirect_querystring }}">
+                        Sign Up - Free!
+                    </a>
+                    {% if recent_users %}
+                        <p>
+                            <h3>Who's In?</h3>
+                            {% for user in recent_users %}
+                                {% if user.profile.picture_url %}
+                                    <img class="img-potrait fixed-width" src="{{ user.profile.picture_url }}" title="{{ user.profile.full_name }}">
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                </p>
+            </div>
+
+        </div>
+
     </div>
 
 {% endblock %}

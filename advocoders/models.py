@@ -11,6 +11,10 @@ class Company(models.Model):
     def __unicode__(self):
         return self.domain
 
+    @property
+    def logo(self):
+        return 'http://www.futurecarecoalition.com/images/logo_generic.png'
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User)
@@ -58,6 +62,10 @@ class Profile(models.Model):
     @property
     def picture_url(self):
         return self.picture.extra_data.get('picture')
+
+    @property
+    def full_name(self):
+        return '%s %s' % (self.user.first_name, self.user.last_name)
 
 
 class Content(models.Model):

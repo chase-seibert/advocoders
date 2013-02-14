@@ -1,17 +1,7 @@
-homepage hero
-    wtf is this site name and tagline
-    1. Login with Google Apps
-    2. Link your GitHub, Stackoverflow and personal blog
-    3. Your content will be merged into a feed for your team
-        Examples: recent companies
-
-    big button to sign up - Sign Up - It's Free!
-    sidebar: recent people signups advocoders
-
 better initial signup page
     initial=True in URL
     tabs for profile, content feeds, company
-    first page - just the content feeds    
+    first page - just the content feeds
         move blog to this page
         button - save/skip
         populate feed right then
