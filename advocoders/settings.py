@@ -209,7 +209,9 @@ LOGGING = {
 
 BROKER_BACKEND = 'django'
 if DEBUG:
-    CELERY_ALWAYS_EAGER = True
+    # TODO: heroku hack
+    if not os.environ.get('DATABASE_URL'):
+        CELERY_ALWAYS_EAGER = True
 
 import djcelery
 djcelery.setup_loader()
