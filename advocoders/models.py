@@ -2,18 +2,24 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
 from social_auth.models import UserSocialAuth
+from colorful.fields import RGBColorField
 
 
 class Company(models.Model):
     domain = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255, blank=True)
+    website_url = models.URLField(blank=True)
+    logo = models.URLField(blank=True)
+    location = models.CharField(max_length=255, blank=True)
+    description = models.TextField(blank=True)
+    backsplash = models.URLField(blank=True)
+    background_color = RGBColorField(blank=True)
+    link_color = RGBColorField(blank=True)
+    dark_theme = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return self.domain
-
-    @property
-    def logo(self):
-        return 'http://www.futurecarecoalition.com/images/logo_generic.png'
 
 
 class Profile(models.Model):

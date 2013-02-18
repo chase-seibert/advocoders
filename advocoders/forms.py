@@ -1,5 +1,6 @@
 from django import forms
 from advocoders.models import Profile
+from advocoders.models import Company
 
 
 class ProfileForm(forms.ModelForm):
@@ -14,3 +15,10 @@ class ProfileForm(forms.ModelForm):
         self.fields['company'].choices = [(company.id, company.domain) for company in self.user.profile.company_choices]
         self.fields['picture'].choices = [(auth.id, auth.provider) for auth in self.user.social_auth.all()]
         self.fields['blog'].required = False
+
+
+class CompanyForm(forms.ModelForm):
+
+    class Meta:
+        model = Company
+        fields = ('name', 'website_url', 'logo', 'location', 'description')

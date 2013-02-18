@@ -87,6 +87,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'advocoders.middleware.ViewNameMiddleware',
 )
 
 ROOT_URLCONF = 'advocoders.urls'
@@ -156,8 +157,10 @@ STACKOVERFLOW_EXTRA_DATA = [
 ]
 
 LOGIN_URL = '/'
-LOGIN_REDIRECT_URL = '/profile'
-LOGIN_ERROR_URL = '/profile'
+LOGIN_REDIRECT_URL = '/settings/feeds'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/settings/profile?initial=True'
+SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/settings/feeds'
+LOGIN_ERROR_URL = '/'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
@@ -205,6 +208,8 @@ LOGGING = {
 }
 
 BROKER_BACKEND = 'django'
+if DEBUG:
+    CELERY_ALWAYS_EAGER = True
 
 import djcelery
 djcelery.setup_loader()

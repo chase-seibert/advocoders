@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block tabs %}
+    {% if not request.REQUEST.initial %}
+        <ul class="nav nav-tabs">
+            <li class="{% if request.current_view == 'settings_profile' %}active{% endif %}">
+                <a href="{% url settings_profile %}">Profile</a>
+            </li>
+            <li class="{% if request.current_view == 'settings_feeds' %}active{% endif %}">
+                <a href="{% url settings_feeds %}">Feeds</a>
+            </li>
+            <li class="{% if request.current_view == 'settings_company' %}active{% endif %}">
+                <a href="{% url settings_company %}">Company</a>
+            </li>
+        </ul>
+    {% endif %}
+{% endblock %}

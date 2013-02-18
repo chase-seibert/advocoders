@@ -7,8 +7,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
+from django.template import defaultfilters
 from advocoders.models import Profile
 from advocoders.forms import ProfileForm
+from advocoders.forms import CompanyForm
 from advocoders.models import Company
 from advocoders.models import Content
 
@@ -37,7 +39,7 @@ def feed(request, domain=None, provider=None):
 
 
 @login_required
-def profile(request):
+def settings_profile(request):
     profile, _ = Profile.objects.get_or_create(user=request.user)
     form = ProfileForm(instance=profile, user=request.user)
     if request.method == 'POST':
@@ -45,8 +47,39 @@ def profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Your profile has been saved.')
-            return HttpResponseRedirect(reverse('profile'))
-    return render(request, 'profile.html', locals())
+            return HttpResponseRedirect(reverse('settings_feeds') + '?initial=True'
+                if request.REQUEST.get('initial') else reverse('settings_profile'))
+    return render(request, 'settings/profile.html', locals())
+
+
+@login_required
+def settings_feeds(request):
+    next_url = reverse('settings_feeds')
+    if request.REQUEST.get('initial'):
+        next_url = next_url + defaultfilters.urlencode('?initial=True')
+    return render(request, 'settings/feeds.html', locals())
+
+
+@login_required
+def settings_company(request):
+    profile, _ = Profile.objects.get_or_create(user=request.user)
+    company = profile.company  # TODO: error handling here, middleware?
+    form = CompanyForm(instance=company)
+    if request.method == 'POST':
+        form = CompanyForm(request.POST, instance=company)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your company information has been updated')
+            return HttpResponseRedirect(reverse('my_company')
+                if request.REQUEST.get('initial') else reverse('settings_company'))
+    other_users = company.profile_set.all().exclude(user=profile.user)
+    return render(request, 'settings/company.html', locals())
+
+
+@login_required
+def my_company(request):
+    # TODO: error handling, middleware?
+    return HttpResponseRedirect(reverse('feed_company', args=[request.user.profile.company.domain]))
 
 
 @login_required

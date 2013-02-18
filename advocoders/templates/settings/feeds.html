@@ -1,19 +1,10 @@
-{% extends "base.html" %}
-
-{% load crispy_forms_tags %}
+{% extends "settings/base.html" %}
 
 {% block content %}
     <div class="row">
         <div class="span4 offset1">
-            <form method="post">
-                <legend>Your Profile</legend>
-                {% csrf_token %}
-                {{ form|crispy }}
-                <input class="btn btn-primary" type="submit">
-            </form>
-        </div>
-        <div class="span4 offset1">
-            {% if request.user.profile%}
+
+            {% if request.user.profile %}
                 <legend>Your Linked Accounts</legend>
                 <dl>
                     {% for provider, account in request.user.profile.possible_accounts.items %}
@@ -27,15 +18,21 @@
                             {% endif %}
                         <p>
                             {% if account %}
-                                <a href="{% url socialauth_disconnect provider %}" class="btn">disconnect</a>
+                                <a href="{% url socialauth_disconnect provider %}?next={{ next_url }}" class="btn">disconnect</a>
                             {% else %}
-                                <a href="{% url socialauth_begin provider %}" class="btn btn-primary">connect</a>
+                                <a href="{% url socialauth_begin provider %}?next={{ next_url }}" class="btn btn-primary">connect</a>
                             {% endif %}
                         </p>
                     </dd>
                     {% endfor %}
                 </dl>
             {% endif %}
+
+            {% if request.REQUEST.initial %}
+                <a href="{% url settings_company %}?initial=True" class="btn btn-primary">Next</a>
+                <a href="{% url settings_company %}?initial=True" class="btn btn-secondary">Skip</a>
+            {% endif %}
+
         </div>
     </div>
 {% endblock %}

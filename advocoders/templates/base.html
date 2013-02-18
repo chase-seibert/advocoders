@@ -26,7 +26,7 @@
                                     {% else %}
                                         <li class="active"><a href="{% url home %}">{{ request.user.profile.company }}</a></li>
                                     {% endif %}
-                                    <li><a href="{% url profile %}">Profile</a></li>
+                                    <li><a href="{% url settings_profile %}">Profile</a></li>
                                 </ul>
                                 <ul class="nav pull-right">
                                     <li>Welcome, {{ request.user.username }}</li>
@@ -53,6 +53,7 @@
                         </div>
                     {% endfor %}
                 {% endif %}
+                {% block tabs %}{% endblock %}
                 {% block content %}
                 {% endblock %}
             </div>
