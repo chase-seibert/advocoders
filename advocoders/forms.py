@@ -37,19 +37,20 @@ class ProfileForm(forms.ModelForm):
         self.user.save()
 
 
+_branding_fields = ('_branding_enabled', 'backsplash', 'background_color', 'link_color', 'dark_theme', )
+
+
 class CompanyForm(forms.ModelForm):
 
     class Meta:
         model = Company
-        _branding_fields = ('_branding_enabled', 'backsplash', 'background_color',
-            'link_color', 'dark_theme', )
-        fields = ('name', 'website_url', 'logo', 'location', 'description', )
+        fields = ('name', 'website_url', 'logo', 'location', 'description', ) + _branding_fields
 
-        def __init__(self, *args, **kwargs):
-            if not settings.BRANDING_ENABLED:
-                for field in self._branding_fields:
-                    self.fields[field].enabled = False
-            return super(CompanyForm, self).__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        super(CompanyForm, self).__init__(*args, **kwargs)
+        if not settings.BRANDING_ENABLED:
+            for field in _branding_fields:
+                del self.fields[field]
 
 
 class BlogForm(forms.ModelForm):

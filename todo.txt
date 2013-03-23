@@ -1,5 +1,3 @@
-Branding
-
 Github badges
 
 Google analytics
