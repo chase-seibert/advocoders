@@ -109,3 +109,12 @@ class Content(models.Model):
 
     def __unicode__(self):
         return self.link
+
+    @staticmethod
+    def for_company(company, provider=None):
+        content_list = Content.objects.filter(user__profile__company=company)
+        if provider:
+            content_list = content_list.filter(provider=provider)
+        else:
+            content_list = content_list.exclude(provider='github')
+        return content_list

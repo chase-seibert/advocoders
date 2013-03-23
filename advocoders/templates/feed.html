@@ -5,6 +5,14 @@
     <meta property="og:image" content="{{ company.logo }}"/>
 {% endblock %}
 
+{% block rss %}
+    {% if provider %}
+        <link rel="alternate" type="application/rss+xml" href="{% url feed_company_provider_rss company.domain provider %}"/>
+    {% else %}
+        <link rel="alternate" type="application/rss+xml" href="{% url feed_company_rss company.domain %}"/>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 
     <div class="span8">

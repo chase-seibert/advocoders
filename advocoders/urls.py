@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.conf import settings
 import signals  # DO NOT REMOVE; register signals
+from advocoders.feeds import CompanyContentFeed
 
 
 admin.autodiscover()
@@ -10,7 +11,9 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', 'advocoders.views.home', name='home'),
     url(r'^company/(?P<domain>([^/]*))$', 'advocoders.views.feed', name='feed_company'),
+    url(r'^company/(?P<domain>([^/]*))/rss$', CompanyContentFeed(), name='feed_company_rss'),
     url(r'^company/(?P<domain>([^/]*))/(?P<provider>([^/]*))$', 'advocoders.views.feed', name='feed_company_provider'),
+    url(r'^company/(?P<domain>([^/]*))/(?P<provider>([^/]*))/rss$', CompanyContentFeed(), name='feed_company_provider_rss'),
     url(r'^my/company$', 'advocoders.views.my_company', name='my_company'),
     url(r'^logout$', 'advocoders.views.logout', name='logout'),
     url(r'^settings/profile$', 'advocoders.views.settings_profile', name='settings_profile'),
