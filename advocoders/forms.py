@@ -7,7 +7,7 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('first_name', 'last_name', 'picture', 'title', 'blog')
+        fields = ('first_name', 'last_name', 'title', 'picture', )
 
     first_name = forms.CharField()
     last_name = forms.CharField()
@@ -15,9 +15,7 @@ class ProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
         super(ProfileForm, self).__init__(*args, **kwargs)
-        #self.fields['company'].choices = [(company.id, company.domain) for company in self.user.profile.company_choices]
         self.fields['picture'].choices = [(auth.id, auth.provider) for auth in self.user.social_auth.all()]
-        self.fields['blog'].required = False
         self.fields['first_name'].initial = self.user.first_name
         self.fields['last_name'].initial = self.user.last_name
 
@@ -32,4 +30,11 @@ class CompanyForm(forms.ModelForm):
 
     class Meta:
         model = Company
-        fields = ('name', 'website_url', 'logo', 'location', 'description')
+        fields = ('name', 'website_url', 'logo', 'location', 'description', )
+
+
+class BlogForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ('blog', )

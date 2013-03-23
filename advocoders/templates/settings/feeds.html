@@ -1,5 +1,7 @@
 {% extends "settings/base.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block form %}
     <div class="row">
         <div class="span4 offset1">
@@ -7,23 +9,31 @@
             {% if request.user.profile %}
                 <legend>Your Linked Accounts</legend>
                 <dl>
-                    {% for provider, account in request.user.profile.possible_accounts.items %}
-                    <dt>{{ provider|title }}</dt>
+                    <dt>Personal Blog</dt>
                     <dd>
-                        {% if provider == "github" %}
-                            Hook up your GitHub accout to display your recent public repository commits in your company feed.
-                        {% endif %}
-                        {% if provider == "stackoverflow" %}
-                            Gook up your Stackoverflow account to displauy your recent questions and responses in your company feed.
-                            {% endif %}
-                        <p>
-                            {% if account %}
-                                <a href="{% url socialauth_disconnect provider %}?next={{ next_url }}" class="btn">disconnect</a>
-                            {% else %}
-                                <a href="{% url socialauth_begin provider %}?next={{ next_url }}" class="btn btn-primary">connect</a>
-                            {% endif %}
-                        </p>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <input class="btn btn-primary" type="submit">
+                        </form>
                     </dd>
+                    {% for provider, account in request.user.profile.possible_accounts.items %}
+                        <dt>{{ provider|title }}</dt>
+                        <dd>
+                            {% if provider == "github" %}
+                                Hook up your GitHub account to display your recent public repository commits in your company feed.
+                            {% endif %}
+                            {% if provider == "stackoverflow" %}
+                                Hook up your Stackoverflow account to display your recent questions and responses in your company feed.
+                                {% endif %}
+                            <p>
+                                {% if account %}
+                                    <a href="{% url socialauth_disconnect provider %}?next={{ next_url }}" class="btn">disconnect</a>
+                                {% else %}
+                                    <a href="{% url socialauth_begin provider %}?next={{ next_url }}" class="btn btn-primary">connect</a>
+                                {% endif %}
+                            </p>
+                        </dd>
                     {% endfor %}
                 </dl>
             {% endif %}

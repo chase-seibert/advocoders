@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 from django.template import defaultfilters
 from advocoders.models import Profile
 from advocoders.forms import ProfileForm
+from advocoders.forms import BlogForm
 from advocoders.forms import CompanyForm
 from advocoders.models import Company
 from advocoders.models import Content
@@ -57,6 +58,13 @@ def settings_feeds(request):
     next_url = reverse('settings_feeds')
     if request.REQUEST.get('initial'):
         next_url = next_url + defaultfilters.urlencode('?initial=True')
+    profile, _ = Profile.objects.get_or_create(user=request.user)
+    form = BlogForm(instance=profile)
+    if request.method == 'POST':
+        form = BlogForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been saved.')
     return render(request, 'settings/feeds.html', locals())
 
 

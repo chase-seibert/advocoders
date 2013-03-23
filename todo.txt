@@ -1,5 +1,3 @@
-first/last name on profile form
-move blog to feeds page
 initial view striped/animated progress bar (1/3 each)
 twitter bootstrap tooltips for title tags on images
 picture picker on profile tab

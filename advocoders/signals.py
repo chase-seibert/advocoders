@@ -24,9 +24,3 @@ def social_auth_extra_values(sender, instance, **kwargs):
         profile, _ = Profile.objects.get_or_create(user=instance.user)
         tasks.update_feed.delay(profile.id, instance.provider)
     return instance
-
-
-@receiver(post_save, sender=Profile)
-def user_post_save(sender, instance, **kwargs):
-    if instance.blog:
-        tasks.update_feed.delay(instance.id, 'blog')

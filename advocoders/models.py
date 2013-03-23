@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from social_auth.models import UserSocialAuth
 from colorful.fields import RGBColorField
 
@@ -32,7 +31,7 @@ class Profile(models.Model):
     company = models.ForeignKey(Company, null=True, verbose_name='Company you want to associate with')
     picture = models.ForeignKey(UserSocialAuth, null=True, verbose_name='Picture you want to use')
     title = models.CharField(max_length=255, blank=True, verbose_name="Your job title")
-    blog = models.URLField(verbose_name='Your blog RSS feed URL')
+    blog = models.URLField(verbose_name='Hook up your personal blog to display recent posts in your company feed.')
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
@@ -83,6 +82,14 @@ class Profile(models.Model):
         if not self.blog:
             return ''
         return '/'.join(self.blog.split('/')[:-1])
+
+    def save(self, *args, **kwargs):
+        if hasattr(self, 'id') and self.id:
+            current = Profile.objects.get(pk=self.id)
+        super(Profile, self).save(*args, **kwargs)
+        if current.blog != self.blog:
+            from advocoders import tasks
+            tasks.update_feed.delay(self.id, 'blog')
 
 
 class Content(models.Model):
