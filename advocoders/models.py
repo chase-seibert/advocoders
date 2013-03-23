@@ -84,10 +84,11 @@ class Profile(models.Model):
         return '/'.join(self.blog.split('/')[:-1])
 
     def save(self, *args, **kwargs):
+        current = None
         if hasattr(self, 'id') and self.id:
             current = Profile.objects.get(pk=self.id)
         super(Profile, self).save(*args, **kwargs)
-        if current.blog != self.blog:
+        if current and current.blog != self.blog:
             from advocoders import tasks
             tasks.update_feed.delay(self.id, 'blog')
 
