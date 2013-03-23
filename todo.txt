@@ -1,5 +1,3 @@
-Share icons
-Fork on github
 Fb meta tags for feed pages, home page
 RSS feed
 Branding
