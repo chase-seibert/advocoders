@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block opengraph %}
+    <meta property="og:title" content="{{ company }} Engineering Blog"/>
+    <meta property="og:image" content="{{ company.logo }}"/>
+{% endblock %}
+
 {% block content %}
 
     <div class="span8">

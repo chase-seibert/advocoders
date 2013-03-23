@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.urlresolvers import resolve
 from advocoders.models import Company
 from advocoders.models import Profile
@@ -12,6 +13,8 @@ class ViewNameMiddleware(object):
 
 class DefaultRequestVars(object):
     def process_view(self, request, view_func, view_args, view_kwargs):
+        request.SITE_NAME = settings.SITE_NAME
+        request.SITE_TAGLINE = settings.SITE_TAGLINE
         request.current_url = request.build_absolute_uri()
         if request.user.is_authenticated():
             company, _ = Company.objects.get_or_create(domain=utils.get_domain(request.user.email))

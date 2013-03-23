@@ -3,12 +3,16 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{% block title%}Advocoders - Meta Blogging for Engineering Teams{% endblock %}</title>
+        <title>{% block title%}{{ request.SITE_NAME }}: {{ request.SITE_TAGLINE }}{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" media="screen">
         <link rel="stylesheet" href="{% static 'css/bootstrap-responsive.min.css' %}" media="screen">
         <link rel="stylesheet" href="{% static 'css/pygments.css' %}" type="text/css" media="screen" />
         <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css" media="screen" />
+        <meta property="og:url" content="{{ request.current_url }}"/>
+        <meta property="og:site_name" content="{{ request.SITE_NAME }}"/>
+        <meta property="og:type" content="blog"/>
+        {% block opengraph %}{% endblock %}
     </head>
     <body>
 
@@ -18,10 +22,10 @@
                     <div class="container">
                         {% if request.company %}
                             <a class="brand" href="{% url feed_company request.company.domain %}">
-                                Advocoders: {{ request.company }}
+                                {{ request.SITE_NAME }}: {{ request.company }}
                             </a>
                         {% else %}
-                            <a class="brand" href="/">Advocoders</a>
+                        <a class="brand" href="/">{{ request.SITE_NAME}}</a>
                         {% endif %}
                         <div class="nav-collapse collapse">
 

@@ -36,7 +36,7 @@
                     You company has a
                     <a href="http://{{ request.META.HTTP_HOST }}{% url feed_company request.user.profile.company.domain %}">
                         live feed
-                    </a> on Advocoders.
+                    </a> on {{ request.SITE_NAME }}.
                 </small>
                 {% with url=request.current_url|urlencode %}
                     {% include "_share.html" %}
