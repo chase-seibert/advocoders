@@ -11,7 +11,11 @@ from advocoders.models import Profile
 
 @receiver(post_save, sender=User)
 def user_post_save(sender, instance, **kwargs):
-    Company.objects.get_or_create(domain=utils.get_domain(instance.email))
+    company, _ = Company.objects.get_or_create(domain=utils.get_domain(instance.email))
+    profile, created = Profile.objects.get_or_create(user=instance)
+    if created or not profile.company:
+        profile.company = company
+        profile.save()
 
 
 @receiver(pre_save, sender=UserSocialAuth)

@@ -41,7 +41,7 @@ def feed(request, domain=None, provider=None):
 
 @login_required
 def settings_profile(request):
-    profile, _ = Profile.objects.get_or_create(user=request.user)
+    profile = request.user.profile
     form = ProfileForm(instance=profile, user=request.user)
     if request.method == 'POST':
         form = ProfileForm(request.POST, instance=profile, user=request.user)
@@ -58,7 +58,7 @@ def settings_feeds(request):
     next_url = reverse('settings_feeds')
     if request.REQUEST.get('initial'):
         next_url = next_url + defaultfilters.urlencode('?initial=True')
-    profile, _ = Profile.objects.get_or_create(user=request.user)
+    profile = request.user.profile
     form = BlogForm(instance=profile)
     if request.method == 'POST':
         form = BlogForm(request.POST, instance=profile)
@@ -70,8 +70,8 @@ def settings_feeds(request):
 
 @login_required
 def settings_company(request):
-    profile, _ = Profile.objects.get_or_create(user=request.user)
-    company = profile.company  # TODO: error handling here, middleware?
+    profile = request.user.profile
+    company = profile.company
     form = CompanyForm(instance=company)
     if request.method == 'POST':
         form = CompanyForm(request.POST, instance=company)
@@ -86,9 +86,7 @@ def settings_company(request):
 
 @login_required
 def my_company(request):
-    # TODO: error handling, middleware?
-    profile, _ = Profile.objects.get_or_create(user=request.user)
-    return HttpResponseRedirect(reverse('feed_company', args=[profile.company.domain]))
+    return HttpResponseRedirect(reverse('feed_company', args=[request.user.profile.company.domain]))
 
 
 @login_required
