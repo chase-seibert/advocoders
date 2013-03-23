@@ -16,20 +16,18 @@
             <div class="navbar navbar-inverse">
                 <div class="navbar-inner">
                     <div class="container">
-                        <a class="brand" href="/">Advocoders</a>
+                        {% if request.user.profile.company %}
+                            <a class="brand" href="{% url feed_company request.user.profile.company.domain %}">
+                                Advocoders: {{ request.user.profile.company }}
+                            </a>
+                        {% else %}
+                            <a class="brand" href="/">Advocoders</a>
+                        {% endif %}
                         <div class="nav-collapse collapse">
 
                             {% if request.user.is_authenticated %}
-                                <ul class="nav">
-                                    {% if request.user.profile.company %}
-                                        <li class="active"><a href="{% url feed_company request.user.profile.company.domain %}">{{ request.user.profile.company }}</a></li>
-                                    {% else %}
-                                        <li class="active"><a href="{% url home %}">{{ request.user.profile.company }}</a></li>
-                                    {% endif %}
-                                    <li><a href="{% url settings_profile %}">Profile</a></li>
-                                </ul>
                                 <ul class="nav pull-right">
-                                    <li>Welcome, {{ request.user.username }}</li>
+                                    <li><a href="{% url settings_profile %}">Profile</a></li>
                                     <li><a href="{% url logout %}">Logout</a></li>
                                 </ul>
                             {% else %}
@@ -44,8 +42,8 @@
             </div>
         {% endblock %}
 
-        <div class="row">
-            <div class="span10 offset2 vertical-offset1">
+        <div class="row-fluid">
+            <div class="span10 offset1 vertical-offset1">
                 {% if messages %}
                     {% for message in messages %}
                         <div class="alert alert-{{ message.tags }}">

@@ -15,3 +15,29 @@
         </ul>
     {% endif %}
 {% endblock %}
+
+{% block content %}
+    <div class="row-fluid">
+        <div class="span8">
+            {% block form %}
+            {% endblock %}
+        </div>
+        {% with request.user.profile.company as company %}
+            <div class="span4 well">
+                <h4>
+                    Your company blog is live!
+                </h4>
+                <div class="pull-right">
+                    <img class="img-polaroid fixed-width" src="{{ company.logo }}">
+                </div>
+                <small>
+                    The {{ company }} feed is up at
+                    <a href="http://{{ request.META.HTTP_HOST }}{% url feed_company request.user.profile.company.domain %}">
+                        http://{{ request.META.HTTP_HOST }}{% url feed_company request.user.profile.company.domain %}
+                    </a>.
+                    Share this with your friends!
+                </small>
+            </div>
+        {% endwith %}
+    </div>
+{% endblock %}

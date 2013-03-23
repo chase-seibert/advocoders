@@ -1,18 +1,7 @@
-better initial signup page
-    first page - just the content feeds
-        move blog to this page
-        button - save/skip
-        populate feed right then
-    initial view striped/animated progress bar (1/3 each)
-
-current active tab
 first/last name on profile form
-work in source (blog/stackoverflow) on posts, maybe full site URL for blogs?
-link all headshots to a feed of just them, badge count for total posts
-toolips for title tags on images
-picture picker
+move blog to feeds page
+initial view striped/animated progress bar (1/3 each)
+twitter bootstrap tooltips for title tags on images
+picture picker on profile tab
 truncate posts, click to show more
-fixed sidebar on company feed for all users, highlights current user, scroll to clicked user if on page, or separate page
-short copany blurb in main section of page 1 on company feed
-
-comp
+carosel on homepage

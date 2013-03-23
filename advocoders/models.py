@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from social_auth.models import UserSocialAuth
 from colorful.fields import RGBColorField
 
@@ -19,7 +20,11 @@ class Company(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return self.domain
+        return self.name or self.domain
+
+    @property
+    def users(self):
+        return User.objects.filter(profile__company=self)
 
 
 class Profile(models.Model):
@@ -72,6 +77,12 @@ class Profile(models.Model):
     @property
     def full_name(self):
         return '%s %s' % (self.user.first_name, self.user.last_name)
+
+    @property
+    def blog_url(self):
+        if not self.blog:
+            return ''
+        return '/'.join(self.blog.split('/')[:-1])
 
 
 class Content(models.Model):

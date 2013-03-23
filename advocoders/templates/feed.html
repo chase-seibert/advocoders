@@ -2,52 +2,90 @@
 
 {% block content %}
 
-    {% if content_list %}
-        {% for content in content_list %}
-            <div class="media">
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="{{ content.user.profile.picture_url }}" width="50px">
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading">
-                        <a href="{{ content.link }}">
-                            {{ content.title }}
+    <div class="span8">
+
+        {% if content_list %}
+            {% for content in content_list %}
+                <div class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="{{ content.user.profile.picture_url }}" width="50px">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <a href="{{ content.link }}">
+                                {{ content.title }}
+                            </a>
+                        </h4>
+                        <span class="muted">{{ content.date }}</span>
+                        by {{ content.user.first_name }}
+                        <p>
+                            {{ content.body|safe }}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="pagination">
+            <ul>
+                {% if content_list.has_previous %}
+                    <li><a href="?page={{ content_list.previous_page_number }}" class="prev">Prev</a></li>
+                {% else %}
+                    <li class="disabled prev"><a href="#">Prev</a></li>
+                {% endif %}
+                {% for page in pages %}
+                    {% if page %}
+                        {% ifequal page content_list.number %}
+                            <li class="current page active"><a href="#">{{ page }}</a></li>
+                        {% else %}
+                            <li><a href="?page={{ page }}" class="page">{{ page }}</a></li>
+                        {% endifequal %}
+                    {% else %}
+                        ...
+                    {% endif %}
+                {% endfor %}
+                {% if content_list.has_next %}
+                    <li><a href="?page={{ content_list.next_page_number }}" class="next">Next</a></li>
+                {% else %}
+                    <li class="disabled next"><a href="#">Next</a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="span4">
+        <div class="well about-company">
+            <div class="pull-right">
+                <img class="img-polaroid fixed-width" src="{{ company.logo }}">
+            </div>
+            <h3>
+                About {{ company }}
+            </h3>
+            <address>
+                {{ company.location }}
+            </address>
+            <div class="description">
+                <p>
+                    {{ company.description }}
+                </p>
+                <div class="users">
+                    <h4>Who are we?</h4>
+                    {% for user in company.users %}
+                        <div class="media">
+                        {% if user.profile.picture_url %}
+                        <a href="{{ user.profile.blog_url }}" class="pull-left">
+                            <img class="img-polaroid fixed-width" src="{{ user.profile.picture_url }}" title="{{ user.profile.full_name }}">
                         </a>
-                    </h4>
-                    <span class="muted">{{ content.date }}</span>
-                    by {{ content.user.first_name }}
-                    <p>
-                        {{ content.body|safe }}
-                    </p>
+                        {% endif %}
+                        <div class="media-body">
+                            <h5 class="media-heading">{{ user.profile }}</h5>
+                            {{ user.profile.title }}
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
-        {% endfor %}
-    {% endif %}
-
-    <div class="pagination">
-        <ul>
-            {% if content_list.has_previous %}
-                <li><a href="?page={{ content_list.previous_page_number }}" class="prev">Prev</a></li>
-            {% else %}
-                <li class="disabled prev"><a href="#">Prev</a></li>
-            {% endif %}
-            {% for page in pages %}
-                {% if page %}
-                    {% ifequal page content_list.number %}
-                        <li class="current page active"><a href="#">{{ page }}</a></li>
-                    {% else %}
-                        <li><a href="?page={{ page }}" class="page">{{ page }}</a></li>
-                    {% endifequal %}
-                {% else %}
-                    ...
-                {% endif %}
-            {% endfor %}
-            {% if content_list.has_next %}
-                <li><a href="?page={{ content_list.next_page_number }}" class="next">Next</a></li>
-            {% else %}
-                <li class="disabled next"><a href="#">Next</a></li>
-            {% endif %}
-        </ul>
+        </div>
     </div>
 
 {% endblock %}

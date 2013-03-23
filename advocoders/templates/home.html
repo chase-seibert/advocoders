@@ -31,7 +31,7 @@
                                 </a>
                                 <div class="media-body">
                                     <h4 class="media-heading"><a href="{% url feed_company company.domain %}">{{ company }}</a></h4>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    {{ company.description|truncatewords:20 }}
                                 </div>
                             </div>
                         {% endfor %}

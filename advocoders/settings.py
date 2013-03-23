@@ -157,7 +157,7 @@ STACKOVERFLOW_EXTRA_DATA = [
 ]
 
 LOGIN_URL = '/'
-LOGIN_REDIRECT_URL = '/settings/feeds'
+LOGIN_REDIRECT_URL = '/my/company'
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/settings/profile?initial=True'
 SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/settings/feeds'
 LOGIN_ERROR_URL = '/'
