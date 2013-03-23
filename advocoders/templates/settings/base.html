@@ -27,9 +27,11 @@
                 <h4>
                     Your company blog is live!
                 </h4>
-                <div class="pull-right">
-                    <img class="img-polaroid fixed-width" src="{{ company.logo }}">
-                </div>
+                {% if company.logo %}
+                    <div class="pull-right">
+                        <img class="img-polaroid fixed-width" src="{{ company.logo }}">
+                    </div>
+                {% endif %}
                 <small>
                     You company has a
                     <a href="http://{{ request.META.HTTP_HOST }}{% url feed_company request.user.profile.company.domain %}">

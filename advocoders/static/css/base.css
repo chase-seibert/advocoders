@@ -38,3 +38,38 @@ label[for="id_blog"] {
 textarea {
     width: 100%;
 }
+
+ul.share {
+    margin-left: 1em;
+}
+
+.share li {
+    list-style: none;
+}
+
+.share a {
+    background-repeat: no-repeat;
+    padding-left: 1.7em;
+    background-size: 1.3em;
+}
+
+.share a.facebook {
+    background-image: url('/static/images/social/facebook.png');
+}
+
+.share a.twitter {
+    background-image: url('/static/images/social/twitter.png');
+}
+
+.share a.linkedin {
+    background-image: url('/static/images/social/linkedin.png');
+}
+
+.share a.google {
+    background-image: url('/static/images/social/google.png');
+}
+
+.share a.email {
+    background-image: url('/static/images/social/email.png');
+}
+
