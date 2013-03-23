@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.utils.safestring import mark_safe
 from advocoders.models import Profile
 from advocoders.models import Company
@@ -40,7 +41,15 @@ class CompanyForm(forms.ModelForm):
 
     class Meta:
         model = Company
+        _branding_fields = ('_branding_enabled', 'backsplash', 'background_color',
+            'link_color', 'dark_theme', )
         fields = ('name', 'website_url', 'logo', 'location', 'description', )
+
+        def __init__(self, *args, **kwargs):
+            if not settings.BRANDING_ENABLED:
+                for field in self._branding_fields:
+                    self.fields[field].enabled = False
+            return super(CompanyForm, self).__init__(*args, **kwargs)
 
 
 class BlogForm(forms.ModelForm):

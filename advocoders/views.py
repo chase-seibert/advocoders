@@ -32,6 +32,10 @@ def feed(request, domain, provider=None):
     return render(request, 'feed.html', locals())
 
 
+def settings_render(request, template, context):
+    context['company'] = request.company
+    return render(request, template, context)
+
 @login_required
 def settings_profile(request):
     form = ProfileForm(instance=request.profile, user=request.user)
@@ -42,7 +46,7 @@ def settings_profile(request):
             messages.success(request, 'Your profile has been saved.')
             return HttpResponseRedirect(reverse('settings_feeds') + '?initial=True'
                 if request.REQUEST.get('initial') else reverse('settings_profile'))
-    return render(request, 'settings/profile.html', locals())
+    return settings_render(request, 'settings/profile.html', locals())
 
 
 @login_required
@@ -56,7 +60,7 @@ def settings_feeds(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Your profile has been saved.')
-    return render(request, 'settings/feeds.html', locals())
+    return settings_render(request, 'settings/feeds.html', locals())
 
 
 @login_required
@@ -70,7 +74,7 @@ def settings_company(request):
             return HttpResponseRedirect(reverse('my_company')
                 if request.REQUEST.get('initial') else reverse('settings_company'))
     other_users = request.company.profile_set.all().exclude(user=request.profile)
-    return render(request, 'settings/company.html', locals())
+    return settings_render(request, 'settings/company.html', locals())
 
 
 @login_required

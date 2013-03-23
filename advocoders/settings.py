@@ -181,6 +181,8 @@ SOCIAL_AUTH_SLUGIFY_USERNAMES = True
 
 AUTH_PROFILE_MODULE = 'advocoders.models.Profile'
 
+BRANDING_ENABLED = True
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.

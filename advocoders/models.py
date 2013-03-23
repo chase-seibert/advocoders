@@ -12,11 +12,15 @@ class Company(models.Model):
     logo = models.URLField(blank=True)
     location = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)
-    backsplash = models.URLField(blank=True)
-    background_color = RGBColorField(blank=True)
-    link_color = RGBColorField(blank=True)
-    dark_theme = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)
+    # branding options
+    _branding_enabled = models.BooleanField(default=False,
+        verbose_name='Enable Custom Branding')
+    backsplash = models.URLField(blank=True,
+        verbose_name='Background image URL')
+    background_color = RGBColorField(blank=True, default='#FFFFFF')
+    link_color = RGBColorField(blank=True, default='#0080c0')
+    dark_theme = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.name or self.domain
@@ -24,6 +28,28 @@ class Company(models.Model):
     @property
     def users(self):
         return User.objects.filter(profile__company=self)
+
+    @property
+    def branding_enabled(self):
+        return settings.BRANDING_ENABLED and self._branding_enabled
+
+    def _color_variant(self, color, intensity):
+        from advocoders.utils import color_variant
+        if self.dark_theme:
+            intensity = -1 * intensity
+        return color_variant(color, intensity)
+
+    @property
+    def background_color1(self):
+        return self._color_variant(self.background_color, -20)
+
+    @property
+    def background_color2(self):
+        return self._color_variant(self.background_color, -60)
+
+    @property
+    def white_or_black(self):
+        return 'black' if self.dark_theme else 'white'
 
 
 class Profile(models.Model):

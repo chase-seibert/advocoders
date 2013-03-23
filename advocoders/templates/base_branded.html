@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block branding %}
+    {% if company.branding_enabled %}
+        <style>
+            body {
+                background-color: {{ company.background_color }};
+                background-image: url('{{ company.backsplash }}');
+            }
+            .branded_content {
+                background-color: {{ company.white_or_black }};
+                padding: 1em;
+                opacity: 0.98;
+            }
+            a, a:hover, a:visited {
+                color: {{ company.link_color }};
+            }
+            .well, pre, .highlight, code {
+                background-color: {{ company.background_color1 }};
+                border: {{ company.background_color2 }};
+            }
+            {% if company.dark_theme %}
+                body, pre code {
+                    color: white;
+                }
+            {% endif %}
+        </style>
+    {% endif %}
+{% endblock %}

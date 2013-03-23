@@ -14,6 +14,7 @@
         <meta property="og:type" content="blog"/>
         {% block opengraph %}{% endblock %}
         {% block rss %}{% endblock %}
+        {% block branding %}{% endblock %}
     </head>
     <body>
 
@@ -57,7 +58,7 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            <div class="span10 offset1 vertical-offset1">
+            <div class="span10 offset1 vertical-offset1 branded_content">
                 {% block tabs %}{% endblock %}
                 {% block content %}
                 {% endblock %}

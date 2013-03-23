@@ -1,4 +1,3 @@
-RSS feed
 Branding
 
 Github badges
