@@ -31,12 +31,14 @@
                     <img class="img-polaroid fixed-width" src="{{ company.logo }}">
                 </div>
                 <small>
-                    The {{ company }} feed is up at
+                    You company has a
                     <a href="http://{{ request.META.HTTP_HOST }}{% url feed_company request.user.profile.company.domain %}">
-                        http://{{ request.META.HTTP_HOST }}{% url feed_company request.user.profile.company.domain %}
-                    </a>.
-                    Share this with your friends!
+                        live feed
+                    </a> on Advocoders.
                 </small>
+                {% with url=request.current_url|urlencode %}
+                    {% include "_share.html" %}
+                {% endwith %}
             </div>
         {% endwith %}
     </div>

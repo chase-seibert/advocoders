@@ -1,21 +1,8 @@
-from django.db.models.signals import post_save
 from django.db.models.signals import pre_save
-from django.contrib.auth.models import User
 from django.dispatch import receiver
 from social_auth.models import UserSocialAuth
-from advocoders.models import Company
-from advocoders import utils
-from advocoders import tasks
 from advocoders.models import Profile
-
-
-@receiver(post_save, sender=User)
-def user_post_save(sender, instance, **kwargs):
-    company, _ = Company.objects.get_or_create(domain=utils.get_domain(instance.email))
-    profile, created = Profile.objects.get_or_create(user=instance)
-    if created or not profile.company:
-        profile.company = company
-        profile.save()
+from advocoders import tasks
 
 
 @receiver(pre_save, sender=UserSocialAuth)

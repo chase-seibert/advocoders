@@ -16,9 +16,9 @@
             <div class="navbar navbar-inverse">
                 <div class="navbar-inner">
                     <div class="container">
-                        {% if request.user.profile.company %}
-                            <a class="brand" href="{% url feed_company request.user.profile.company.domain %}">
-                                Advocoders: {{ request.user.profile.company }}
+                        {% if request.company %}
+                            <a class="brand" href="{% url feed_company request.company.domain %}">
+                                Advocoders: {{ request.company }}
                             </a>
                         {% else %}
                             <a class="brand" href="/">Advocoders</a>
@@ -43,14 +43,16 @@
         {% endblock %}
 
         <div class="row-fluid">
-            <div class="span10 offset1 vertical-offset1">
-                {% if messages %}
+            {% if messages %}
+                <div class="span8 offset2">
                     {% for message in messages %}
                         <div class="alert alert-{{ message.tags }}">
                             {{ message }}
                         </div>
                     {% endfor %}
-                {% endif %}
+                </div>
+            {% endif %}
+            <div class="span10 offset1 vertical-offset1">
                 {% block tabs %}{% endblock %}
                 {% block content %}
                 {% endblock %}

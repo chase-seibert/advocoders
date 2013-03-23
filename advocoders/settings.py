@@ -88,6 +88,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'advocoders.middleware.ViewNameMiddleware',
+    'advocoders.middleware.DefaultRequestVars',
 )
 
 ROOT_URLCONF = 'advocoders.urls'

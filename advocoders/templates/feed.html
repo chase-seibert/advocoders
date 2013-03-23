@@ -24,37 +24,57 @@
                     </div>
                 </div>
             {% endfor %}
-        {% endif %}
 
-        <div class="pagination">
-            <ul>
-                {% if content_list.has_previous %}
-                    <li><a href="?page={{ content_list.previous_page_number }}" class="prev">Prev</a></li>
-                {% else %}
-                    <li class="disabled prev"><a href="#">Prev</a></li>
-                {% endif %}
-                {% for page in pages %}
-                    {% if page %}
-                        {% ifequal page content_list.number %}
-                            <li class="current page active"><a href="#">{{ page }}</a></li>
-                        {% else %}
-                            <li><a href="?page={{ page }}" class="page">{{ page }}</a></li>
-                        {% endifequal %}
+            <div class="pagination">
+                <ul>
+                    {% if content_list.has_previous %}
+                        <li><a href="?page={{ content_list.previous_page_number }}" class="prev">Prev</a></li>
                     {% else %}
-                        ...
+                        <li class="disabled prev"><a href="#">Prev</a></li>
                     {% endif %}
-                {% endfor %}
-                {% if content_list.has_next %}
-                    <li><a href="?page={{ content_list.next_page_number }}" class="next">Next</a></li>
+                    {% for page in pages %}
+                        {% if page %}
+                            {% ifequal page content_list.number %}
+                                <li class="current page active"><a href="#">{{ page }}</a></li>
+                            {% else %}
+                                <li><a href="?page={{ page }}" class="page">{{ page }}</a></li>
+                            {% endifequal %}
+                        {% else %}
+                            ...
+                        {% endif %}
+                    {% endfor %}
+                    {% if content_list.has_next %}
+                        <li><a href="?page={{ content_list.next_page_number }}" class="next">Next</a></li>
+                    {% else %}
+                        <li class="disabled next"><a href="#">Next</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+        {% else %}
+            <div class="alert">
+                {% if request.user.is_authenticated and request.company == company %}
+                    <h4>Your company has no activity.</h4>
+                    Go to <a href="{% url settings_feeds %}">Profile > Feeds</a> to add your personal activity into your company feed.
                 {% else %}
-                    <li class="disabled next"><a href="#">Next</a></li>
+                    <h4>This company has no activity.</h4>
                 {% endif %}
-            </ul>
-        </div>
+            </div>
+        {% endif %}
 
     </div>
 
     <div class="span4">
+
+        {% if request.user.is_authenticated and request.company == company %}
+            <div class="well">
+                <h3>Refer your friends</h3>
+                {% with url=request.current_url|urlencode %}
+                    {% include "_share.html" %}
+                {% endwith %}
+            </div>
+        {% endif %}
+
         <div class="well about-company">
             <div class="pull-right">
                 <img class="img-polaroid fixed-width" src="{{ company.logo }}">
@@ -87,6 +107,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
 {% endblock %}

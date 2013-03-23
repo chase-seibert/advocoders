@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 from django.template import defaultfilters
-from advocoders.models import Profile
 from advocoders.forms import ProfileForm
 from advocoders.forms import BlogForm
 from advocoders.forms import CompanyForm
@@ -18,7 +17,7 @@ from advocoders.models import Content
 
 def home(request, domain=None, provider=None):
     if request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('feed_company', args=[request.user.profile.company.domain]))
+        return HttpResponseRedirect(reverse('feed_company', args=[request.company.domain]))
     recent_companies = Company.objects.filter(profile__user__content__isnull=False).distinct()[:5]
     recent_users = User.objects.filter(profile__picture__isnull=False)[:5]
     return render(request, 'home.html', locals())
@@ -41,10 +40,9 @@ def feed(request, domain=None, provider=None):
 
 @login_required
 def settings_profile(request):
-    profile = request.user.profile
-    form = ProfileForm(instance=profile, user=request.user)
+    form = ProfileForm(instance=request.profile, user=request.user)
     if request.method == 'POST':
-        form = ProfileForm(request.POST, instance=profile, user=request.user)
+        form = ProfileForm(request.POST, instance=request.profile, user=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, 'Your profile has been saved.')
@@ -58,10 +56,9 @@ def settings_feeds(request):
     next_url = reverse('settings_feeds')
     if request.REQUEST.get('initial'):
         next_url = next_url + defaultfilters.urlencode('?initial=True')
-    profile = request.user.profile
-    form = BlogForm(instance=profile)
+    form = BlogForm(instance=request.profile)
     if request.method == 'POST':
-        form = BlogForm(request.POST, instance=profile)
+        form = BlogForm(request.POST, instance=request.profile)
         if form.is_valid():
             form.save()
             messages.success(request, 'Your profile has been saved.')
@@ -70,23 +67,21 @@ def settings_feeds(request):
 
 @login_required
 def settings_company(request):
-    profile = request.user.profile
-    company = profile.company
-    form = CompanyForm(instance=company)
+    form = CompanyForm(instance=request.company)
     if request.method == 'POST':
-        form = CompanyForm(request.POST, instance=company)
+        form = CompanyForm(request.POST, instance=request.company)
         if form.is_valid():
             form.save()
             messages.success(request, 'Your company information has been updated')
             return HttpResponseRedirect(reverse('my_company')
                 if request.REQUEST.get('initial') else reverse('settings_company'))
-    other_users = company.profile_set.all().exclude(user=profile.user)
+    other_users = request.company.profile_set.all().exclude(user=request.profile)
     return render(request, 'settings/company.html', locals())
 
 
 @login_required
 def my_company(request):
-    return HttpResponseRedirect(reverse('feed_company', args=[request.user.profile.company.domain]))
+    return HttpResponseRedirect(reverse('feed_company', args=[request.company.domain]))
 
 
 @login_required
