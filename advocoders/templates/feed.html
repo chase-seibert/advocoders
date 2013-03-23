@@ -8,7 +8,7 @@
             {% for content in content_list %}
                 <div class="media">
                     <a class="pull-left" href="#">
-                        <img class="media-object" src="{{ content.user.profile.picture_url }}" width="50px">
+                        <img class="media-object img-polaroid" src="{{ content.user.profile.picture_url }}" width="50px" title="{{ content.user.profile }}">
                     </a>
                     <div class="media-body">
                         <h4 class="media-heading">

@@ -1,6 +1,14 @@
 from django import forms
+from django.utils.safestring import mark_safe
 from advocoders.models import Profile
 from advocoders.models import Company
+from advocoders import utils
+
+
+def headshot_label(auth):
+    return mark_safe('<img src="%s" class="fixed-width img-polaroid"> %s' % (
+        auth.extra_data.get('picture', ''),
+        utils.canonical_social_auth(auth.provider)))
 
 
 class ProfileForm(forms.ModelForm):
@@ -15,7 +23,9 @@ class ProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
         super(ProfileForm, self).__init__(*args, **kwargs)
-        self.fields['picture'].choices = [(auth.id, auth.provider) for auth in self.user.social_auth.all()]
+        self.fields['picture'].choices = [(auth.id, headshot_label(auth))
+            for auth in self.user.social_auth.all()]
+        self.fields['picture'].widget = forms.widgets.RadioSelect()
         self.fields['first_name'].initial = self.user.first_name
         self.fields['last_name'].initial = self.user.last_name
 

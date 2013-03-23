@@ -71,7 +71,8 @@ class Profile(models.Model):
 
     @property
     def picture_url(self):
-        return self.picture.extra_data.get('picture')
+        return (self.picture.extra_data.get('picture')
+            or '/static/images/generic-headshot-male.jpg')
 
     @property
     def full_name(self):

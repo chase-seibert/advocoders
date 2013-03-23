@@ -1,5 +1,24 @@
+success message floating sidebar down
+stackoverflow issues show when updated, not created
+URL overruns sidebar on company edit screen
+
+Session cache, page cache
+Other free services
+Middleware profile company
+Fb meta tags for feed pages, home page
+RSS feed
+Branding
+
 initial view striped/animated progress bar (1/3 each)
 twitter bootstrap tooltips for title tags on images
-picture picker on profile tab
 truncate posts, click to show more
 carosel on homepage
+
+Github badges
+Canonical links
+Google analytics
+CNAME
+Fork on github
+Mail to link to share
+Social network share buttons
+Brown bag

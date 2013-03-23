@@ -110,3 +110,13 @@ def highlight_code_inside_html(html, klass='pre'):
         except Exception, e:
             print 'Exception in highlight_code_inside_html: %s' % e
     return unicode(soup)
+
+
+def canonical_social_auth(provider):
+    if provider == "google-oauth2":
+        return "Google Apps"
+    if provider == "github":
+        return "GitHub"
+    if provider == "stackoverflow":
+        return "Stack Overflow"
+    return provider

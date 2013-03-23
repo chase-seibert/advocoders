@@ -27,7 +27,7 @@
                         {% for company in recent_companies %}
                             <div class="media">
                                 <a class="pull-left" href="{% url feed_company company.domain %}">
-                                    <img class="img-portrait fixed-height" src="{{ company.logo }}">
+                                    <img class="img-polaroid fixed-height" src="{{ company.logo }}">
                                 </a>
                                 <div class="media-body">
                                     <h4 class="media-heading"><a href="{% url feed_company company.domain %}">{{ company }}</a></h4>
@@ -49,7 +49,7 @@
                             <h3>Who's In?</h3>
                             {% for user in recent_users %}
                                 {% if user.profile.picture_url %}
-                                    <img class="img-potrait fixed-width" src="{{ user.profile.picture_url }}" title="{{ user.profile.full_name }}">
+                                    <img class="img-polaroid fixed-width" src="{{ user.profile.picture_url }}" title="{{ user.profile.full_name }}">
                                 {% endif %}
                             {% endfor %}
                         </p>
