@@ -87,7 +87,8 @@ def settings_company(request):
 @login_required
 def my_company(request):
     # TODO: error handling, middleware?
-    return HttpResponseRedirect(reverse('feed_company', args=[request.user.profile.company.domain]))
+    profile, _ = Profile.objects.get_or_create(user=request.user)
+    return HttpResponseRedirect(reverse('feed_company', args=[profile.company.domain]))
 
 
 @login_required
