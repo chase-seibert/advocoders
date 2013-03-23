@@ -34,7 +34,7 @@ def update_feed(profile, provider, rss_url):
         content.provider = provider
         content.title = entry.title
         content.link = entry.link
-        content.date = dateutil_parse(entry.updated)
+        content.date = dateutil_parse(getattr(entry, 'published', entry.updated))
         content.mime_type, content.body = get_body_and_mime_type(entry)
         if content.mime_type == 'text/html':
             content.body = santize_and_hightlight_html(content.body)

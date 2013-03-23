@@ -1,5 +1,3 @@
-success message floating sidebar down
-stackoverflow issues show when updated, not created
 URL overruns sidebar on company edit screen
 
 Session cache, page cache
