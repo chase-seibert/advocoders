@@ -25,3 +25,16 @@ pre {
 .margin {
     margin: 1em;
 }
+
+form > label,
+form .control-group > label {
+    font-weight: bold;
+}
+
+label[for="id_blog"] {
+    font-weight: normal !important;
+}
+
+textarea {
+    width: 100%;
+}

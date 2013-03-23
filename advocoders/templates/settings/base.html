@@ -18,12 +18,12 @@
 
 {% block content %}
     <div class="row-fluid">
-        <div class="span8">
+        <div class="span5">
             {% block form %}
             {% endblock %}
         </div>
         {% with request.user.profile.company as company %}
-            <div class="span4 well">
+            <div class="span4 offset2 well">
                 <h4>
                     Your company blog is live!
                 </h4>

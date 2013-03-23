@@ -3,30 +3,26 @@
 {% load crispy_forms_tags %}
 
 {% block form %}
-    <div class="row">
-        <div class="span4 offset1">
-            <form method="post">
-                <legend>Your Company</legend>
-                {% csrf_token %}
-                {{ form|crispy }}
-                {% if request.REQUEST.initial %}
-                    <input class="btn btn-primary" type="submit" value="Finish">
-                    <a href="{% url my_company %}" class="btn btn-secondary">Skip</a>
-                {% else %}
-                    <input class="btn btn-primary" type="submit">
-                {% endif %}
-            </form>
-        </div>
+    <form method="post">
+        <legend>Your Company</legend>
         {% if other_users %}
-            <div class="span3 offset1">
-                <legend>Other Users</legend>
+            <div class="alert">
                 <p>
-                    Remember, there are other users in your company who share these settings.
+                    <h4>Remember!</h4> 
+                    There are other users in your company who share these settings.
                 </p>
                 {% for profile in other_users %}
-                    <img class="img-potrait fixed-width" src="{{ profile.picture_url }}" title="{{ profile.full_name }}">
+                    <img class="img-polaroid fixed-height" src="{{ profile.picture_url }}" title="{{ profile.full_name }}">
                 {% endfor %}
             </div>
         {% endif %}
-    </div>
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% if request.REQUEST.initial %}
+            <input class="btn btn-primary" type="submit" value="Finish">
+            <a href="{% url my_company %}" class="btn btn-secondary">Skip</a>
+        {% else %}
+            <input class="btn btn-primary" type="submit">
+        {% endif %}
+    </form>
 {% endblock %}

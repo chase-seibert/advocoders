@@ -71,12 +71,13 @@ class Profile(models.Model):
 
     @property
     def picture_url(self):
-        return (self.picture.extra_data.get('picture')
-            or '/static/images/generic-headshot-male.jpg')
+        picture = self.picture.extra_data.get('picture') if self.picture else None
+        return picture or '/static/images/generic-headshot-male.jpg'
 
     @property
     def full_name(self):
-        return '%s %s' % (self.user.first_name, self.user.last_name)
+        name = ('%s %s' % (self.user.first_name, self.user.last_name)).strip()
+        return name or self.user
 
     @property
     def blog_url(self):

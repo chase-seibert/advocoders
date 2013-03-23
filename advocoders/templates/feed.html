@@ -73,14 +73,15 @@
                     <h4>Who are we?</h4>
                     {% for user in company.users %}
                         <div class="media">
-                        {% if user.profile.picture_url %}
-                        <a href="{{ user.profile.blog_url }}" class="pull-left">
-                            <img class="img-polaroid fixed-width" src="{{ user.profile.picture_url }}" title="{{ user.profile.full_name }}">
-                        </a>
-                        {% endif %}
-                        <div class="media-body">
-                            <h5 class="media-heading">{{ user.profile }}</h5>
-                            {{ user.profile.title }}
+                            {% if user.profile.picture_url %}
+                            <a href="{{ user.profile.blog_url }}" class="pull-left">
+                                <img class="img-polaroid fixed-width" src="{{ user.profile.picture_url }}" title="{{ user.profile.full_name }}">
+                            </a>
+                            {% endif %}
+                            <div class="media-body">
+                                <h5 class="media-heading">{{ user.profile }}</h5>
+                                {{ user.profile.title }}
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
