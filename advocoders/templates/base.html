@@ -22,12 +22,12 @@
             <div class="navbar navbar-inverse">
                 <div class="navbar-inner">
                     <div class="container">
-                        {% if request.company %}
-                            <a class="brand" href="{% url feed_company request.company.domain %}">
-                                {{ request.SITE_NAME }}: {{ request.company }}
+                        {% if company %}
+                            <a class="brand" href="{% url feed_company company.domain %}">
+                                {{ request.SITE_NAME }}: {{ company }}
                             </a>
                         {% else %}
-                        <a class="brand" href="/">{{ request.SITE_NAME}}</a>
+                            <a class="brand" href="/">{{ request.SITE_NAME}}</a>
                         {% endif %}
                         <div class="nav-collapse collapse">
 
