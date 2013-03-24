@@ -1,6 +1,5 @@
 Github badges
 
-Google analytics
 Session cache, page cache
 Other free services
 
