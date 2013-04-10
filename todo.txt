@@ -1,3 +1,5 @@
+render company url on sidebar
+allow saving of profiles in admin w/o selecting blog URL
 initial view striped/animated progress bar (1/3 each)
 twitter bootstrap tooltips for title tags on images
 picture picker on profile tab
