@@ -26,9 +26,9 @@
                         {% endif %}
                     <p>
                         {% if account %}
-                            <a href="{% url socialauth_disconnect provider %}?next={{ next_url }}" class="btn">disconnect</a>
+                            <a href="{% url 'socialauth_disconnect' provider %}?next={{ next_url }}" class="btn">disconnect</a>
                         {% else %}
-                            <a href="{% url socialauth_begin provider %}?next={{ next_url }}" class="btn btn-primary">connect</a>
+                            <a href="{% url 'socialauth_begin' provider %}?next={{ next_url }}" class="btn btn-primary">connect</a>
                         {% endif %}
                     </p>
                 </dd>
@@ -37,8 +37,8 @@
     {% endif %}
 
     {% if request.REQUEST.initial %}
-        <a href="{% url settings_company %}?initial=True" class="btn btn-primary">Next</a>
-        <a href="{% url settings_company %}?initial=True" class="btn btn-secondary">Skip</a>
+        <a href="{% url 'settings_company' %}?initial=True" class="btn btn-primary">Next</a>
+        <a href="{% url 'settings_company' %}?initial=True" class="btn btn-secondary">Skip</a>
     {% endif %}
 
 {% endblock %}

@@ -20,7 +20,7 @@
         {{ form|crispy }}
         {% if request.REQUEST.initial %}
             <input class="btn btn-primary" type="submit" value="Finish">
-            <a href="{% url my_company %}" class="btn btn-secondary">Skip</a>
+            <a href="{% url 'my_company' %}" class="btn btn-secondary">Skip</a>
         {% else %}
             <input class="btn btn-primary" type="submit">
         {% endif %}

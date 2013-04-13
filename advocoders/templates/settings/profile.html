@@ -9,7 +9,7 @@
         {{ form|crispy }}
         {% if request.REQUEST.initial %}
             <input class="btn btn-primary" type="submit" value="Next">
-            <a href="{% url settings_feeds %}?initial=True" class="btn btn-secondary">Skip</a>
+            <a href="{% url 'settings_feeds' %}?initial=True" class="btn btn-secondary">Skip</a>
         {% else %}
             <input class="btn btn-primary" type="submit">
         {% endif %}

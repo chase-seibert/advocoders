@@ -23,7 +23,7 @@
                 <div class="navbar-inner">
                     <div class="container">
                         {% if company %}
-                            <a class="brand" href="{% url feed_company company.domain %}">
+                            <a class="brand" href="{% url 'feed_company' company.domain %}">
                                 {{ request.SITE_NAME }}: {{ company }}
                             </a>
                         {% else %}
@@ -33,12 +33,12 @@
 
                             {% if request.user.is_authenticated %}
                                 <ul class="nav pull-right">
-                                    <li><a href="{% url settings_profile %}">Profile</a></li>
-                                    <li><a href="{% url logout %}">Logout</a></li>
+                                    <li><a href="{% url 'settings_profile' %}">Profile</a></li>
+                                    <li><a href="{% url 'logout' %}">Logout</a></li>
                                 </ul>
                             {% else %}
                                 <ul class="nav pull-right">
-                                    <li><a href="{% url socialauth_begin 'google-oauth2' %}?{{ redirect_querystring }}">Login/Signup</a></li>
+                                    <li><a href="{% url 'socialauth_begin' 'google-oauth2' %}?{{ redirect_querystring }}">Login/Signup</a></li>
                                 </ul>
                             {% endif %}
 

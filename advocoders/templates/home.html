@@ -31,11 +31,11 @@
                         <h3>Example feeds</h3>
                         {% for company in recent_companies %}
                             <div class="media">
-                                <a class="pull-left" href="{% url feed_company company.domain %}">
+                                <a class="pull-left" href="{% url 'feed_company' company.domain %}">
                                     <img class="img-polaroid fixed-height" src="{{ company.logo }}">
                                 </a>
                                 <div class="media-body">
-                                    <h4 class="media-heading"><a href="{% url feed_company company.domain %}">{{ company }}</a></h4>
+                                    <h4 class="media-heading"><a href="{% url 'feed_company' company.domain %}">{{ company }}</a></h4>
                                     {{ company.description|truncatewords:20 }}
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
 
             <div class="span3 offset1">
                 <p>
-                    <a class="btn btn-primary btn-large" href="{% url socialauth_begin 'google-oauth2' %}?{{ redirect_querystring }}">
+                    <a class="btn btn-primary btn-large" href="{% url 'socialauth_begin' 'google-oauth2' %}?{{ redirect_querystring }}">
                         Sign Up - Free!
                     </a>
                     {% if recent_users %}
