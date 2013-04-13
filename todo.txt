@@ -1,5 +1,3 @@
-render company url on sidebar
-allow saving of profiles in admin w/o selecting blog URL
 
 Github badges
 Session cache, page cache

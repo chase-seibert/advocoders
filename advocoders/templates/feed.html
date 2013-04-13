@@ -93,7 +93,12 @@
                 <img class="img-polaroid fixed-width" src="{{ company.logo }}">
             </div>
             <h3>
-                About {{ company }}
+                About
+                {% if company.website_url %}
+                <a href="{{ company.website_url }}">{{ company }}</a>
+                {% else %}
+                    {{ company }}
+                {% endif %}
             </h3>
             <address>
                 {{ company.location }}

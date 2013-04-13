@@ -57,7 +57,8 @@ class Profile(models.Model):
     company = models.ForeignKey(Company, null=True, verbose_name='Company you want to associate with')
     picture = models.ForeignKey(UserSocialAuth, null=True, verbose_name='Picture you want to use')
     title = models.CharField(max_length=255, blank=True, verbose_name="Your job title")
-    blog = models.URLField(verbose_name='Hook up your personal blog to display recent posts in your company feed.')
+    blog = models.URLField(null=True, blank=True, verbose_name='Hook up your personal blog to display recent posts in your company feed.')
+    picture_override = models.URLField(null=True, blank=True, verbose_name='Admin picture override')
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
@@ -97,7 +98,10 @@ class Profile(models.Model):
 
     @property
     def picture_url(self):
-        picture = self.picture.extra_data.get('picture') if self.picture else None
+        if self.picture_override:
+            picture = self.picture_override
+        else:
+            picture = self.picture.extra_data.get('picture') if self.picture else None
         return picture or '/static/images/generic-headshot-male.jpg'
 
     @property
