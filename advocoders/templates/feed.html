@@ -20,17 +20,18 @@
         {% if content_list %}
             {% for content in content_list %}
                 <div class="media">
-                    <a class="pull-left" href="#">
+                    <a class="pull-left" href="{{ content.user.profile.blog_url }}">
                         <img class="media-object img-polaroid" src="{{ content.user.profile.picture_url }}" width="50px" title="{{ content.user.profile }}">
                     </a>
                     <div class="media-body">
                         <h4 class="media-heading">
-                            <a href="{{ content.link }}">
+                            <a href="{{ content.link }}" target="_blank">
                                 {{ content.title }}
                             </a>
                         </h4>
                         <span class="muted">{{ content.date }}</span>
                         by {{ content.user.first_name }}
+                        <span class="muted">on {{ content.domain }}</span>
                         <p>
                             {{ content.body|safe }}
                         </p>

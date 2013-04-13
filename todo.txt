@@ -1,4 +1,3 @@
-
 Github badges
 Session cache, page cache
 Other free services

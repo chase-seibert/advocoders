@@ -27,7 +27,7 @@ class Company(models.Model):
 
     @property
     def users(self):
-        return User.objects.filter(profile__company=self)
+        return User.objects.filter(profile__company=self).order_by('profile__sort_order')
 
     @property
     def branding_enabled(self):
@@ -60,6 +60,7 @@ class Profile(models.Model):
     blog = models.URLField(null=True, blank=True, verbose_name='Hook up your personal blog to display recent posts in your company feed.')
     picture_override = models.URLField(null=True, blank=True, verbose_name='Admin picture override')
     date_added = models.DateTimeField(auto_now_add=True)
+    sort_order = models.IntegerField(default=3)  # allows manual ordering
 
     def __unicode__(self):
         return self.user.get_full_name()
@@ -111,9 +112,18 @@ class Profile(models.Model):
 
     @property
     def blog_url(self):
-        if not self.blog:
-            return ''
-        return '/'.join(self.blog.split('/')[:-1])
+        if self.blog:
+            parts = self.blog.split('/')
+            if '/feeds/posts/default' in self.blog:
+                # blogspot
+                return '/'.join(parts[:3])
+            return '/'.join(parts[:-1])
+        order = ('stackoverflow', 'github', 'google-oauth2')
+        for social_auth in sorted(self.user.social_auth.all(), key=lambda a: order.index(a.provider)):
+            link = social_auth.extra_data.get('link')
+            if link:
+                return link
+        return '#'
 
     def save(self, *args, **kwargs):
         current = None
@@ -148,3 +158,7 @@ class Content(models.Model):
         else:
             content_list = content_list.exclude(provider='github')
         return content_list
+
+    @property
+    def domain(self):
+        return self.link.split('/')[2]
