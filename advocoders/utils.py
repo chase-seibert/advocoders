@@ -84,7 +84,7 @@ def santize_and_hightlight_html(html, provider=None):
 def sanitize_html(html):
     return bleach.clean(
         html,
-        tags=bleach.ALLOWED_TAGS + ['p', 'pre', 'div', 'span', 'br', 'table', 'tr', 'td',
+        tags=bleach.ALLOWED_TAGS + ['img', 'p', 'pre', 'div', 'span', 'br', 'table', 'tr', 'td',
             'tbody', 'thead', 'th', 'a', 'blockquote', 'ul', 'li', 'ol', 'b', 'em', 'i',
             'strong', 'u', 'font'],
         attributes=['a', 'class', 'href', 'color', 'size', 'bgcolor', 'border', 'style', ],
