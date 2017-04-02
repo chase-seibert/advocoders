@@ -21,7 +21,8 @@ class CompanyContentFeed(Feed):
         return company.description
 
     def items(self, company):
-        return Content.for_company(company, self.provider)
+        # only most recent 10 items, dlvr.it caps at 512k
+        return Content.for_company(company, self.provider)[:10]
 
     def item_title(self, content):
         return content.title
