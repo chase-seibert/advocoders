@@ -1,3 +1,7 @@
+# See: http://stackoverflow.com/questions/34198538/cannot-import-name-uuid-generate-random-in-heroku-django
+import uuid
+uuid._uuid_generate_random = None
+
 import os
 
 DEBUG = True
