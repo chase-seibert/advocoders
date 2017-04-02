@@ -5,3 +5,4 @@ local_settings.py
 virtualenv
 sqlite3.db
 .ropeproject
+venv
